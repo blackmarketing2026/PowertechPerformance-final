@@ -3,1336 +3,769 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Powertech Performance | Smart Detailing</title>
-  <meta name="description" content="Powertech Performance in Erfurt: Autoaufbereitung, Polieren, Versiegeln und Trockeneisreinigung als interaktive App-Webseite.">
+  <title>Powertech Performance | Futuristic Detailing</title>
+  <meta name="description" content="Powertech Performance in Erfurt: Trockeneis, Polieren und Aufbereitung als futuristische interaktive Webseite.">
   <style>
     :root {
       color-scheme: dark;
-      --bg0: #05060a;
-      --bg1: #101118;
-      --bg2: #15101d;
-      --accent: #a267ff;
-      --accent2: #ff3e8a;
-      --glow: rgba(162, 103, 255, .42);
-      --text: #f7f5ff;
-      --soft: #bab6c7;
-      --line: rgba(255, 255, 255, .14);
-      --glass: rgba(12, 14, 20, .66);
-      --glass2: rgba(24, 27, 38, .78);
-      --good: #73ffc2;
+      --bg0: #02070d;
+      --bg1: #061a2b;
+      --accent: #54d7ff;
+      --accent2: #dff8ff;
+      --accent3: #0d79ff;
+      --panel: rgba(4, 19, 34, .72);
+      --panel2: rgba(11, 44, 72, .56);
+      --line: rgba(130, 221, 255, .42);
+      --text: #eefbff;
+      --soft: #b7d7e5;
+      --glow: rgba(82, 217, 255, .52);
+      --module-icon: "ICE";
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    body[data-module="ice"] {
-      --bg0: #01070b;
-      --bg1: #062030;
-      --bg2: #02111a;
-      --accent: #6fe1ff;
-      --accent2: #e6fbff;
-      --glow: rgba(111, 225, 255, .48);
-      --soft: #bddce7;
-      --glass: rgba(2, 15, 24, .68);
-      --glass2: rgba(7, 30, 44, .8);
+    body[data-mode="prep"] {
+      --bg0: #070711;
+      --bg1: #17122a;
+      --accent: #a78cff;
+      --accent2: #fff2ff;
+      --accent3: #ff5fc7;
+      --panel: rgba(20, 14, 40, .74);
+      --panel2: rgba(80, 48, 126, .46);
+      --line: rgba(191, 160, 255, .42);
+      --soft: #dbcdf2;
+      --glow: rgba(167, 140, 255, .5);
+      --module-icon: "AUF";
     }
 
-    body[data-module="polish"] {
-      --bg0: #070609;
-      --bg1: #17111e;
-      --bg2: #1d0b19;
-      --accent: #ff4fa0;
-      --accent2: #ffd3ea;
-      --glow: rgba(255, 79, 160, .38);
+    body[data-mode="polish"] {
+      --bg0: #08050b;
+      --bg1: #21101d;
+      --accent: #ff5daa;
+      --accent2: #ffe5f3;
+      --accent3: #ffb547;
+      --panel: rgba(35, 12, 29, .76);
+      --panel2: rgba(122, 43, 91, .42);
+      --line: rgba(255, 127, 186, .42);
+      --soft: #f1c4da;
+      --glow: rgba(255, 93, 170, .46);
+      --module-icon: "POL";
     }
 
-    body[data-module="seal"] {
-      --bg0: #030807;
-      --bg1: #0b1b17;
-      --bg2: #08130f;
-      --accent: #73ffc2;
-      --accent2: #dffff1;
-      --glow: rgba(115, 255, 194, .34);
-      --soft: #b8d8ca;
+    body[data-mode="seal"] {
+      --bg0: #020907;
+      --bg1: #0a211b;
+      --accent: #70ffc6;
+      --accent2: #e7fff5;
+      --accent3: #3aa1ff;
+      --panel: rgba(4, 31, 24, .74);
+      --panel2: rgba(36, 116, 86, .42);
+      --line: rgba(112, 255, 198, .36);
+      --soft: #bfe8d8;
+      --glow: rgba(112, 255, 198, .4);
+      --module-icon: "SIG";
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
       min-height: 100vh;
       color: var(--text);
       background:
-        radial-gradient(circle at var(--mx, 52%) var(--my, 18%), var(--glow), transparent 23rem),
-        radial-gradient(circle at 12% 82%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 22rem),
-        linear-gradient(145deg, var(--bg0), var(--bg1) 48%, var(--bg2));
+        radial-gradient(circle at var(--mx, 50%) var(--my, 20%), var(--glow), transparent 22rem),
+        radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 34rem),
+        linear-gradient(155deg, var(--bg0), var(--bg1) 48%, #010204);
       overflow-x: hidden;
-      transition: background .55s ease;
+      transition: background .45s ease;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font: inherit;
-    }
-
-    .page {
-      min-height: 100vh;
-      position: relative;
-      isolation: isolate;
-      padding-bottom: 88px;
-      overflow-x: hidden;
-    }
-
-    .mesh,
-    .scan,
-    .ice-particles {
+    body::before,
+    body::after {
+      content: "";
       position: fixed;
       inset: 0;
-      z-index: -1;
+      z-index: -2;
       pointer-events: none;
     }
 
-    .mesh {
-      opacity: .2;
+    body::before {
       background:
-        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-      background-size: 44px 44px;
-      mask-image: linear-gradient(to bottom, black 0 62%, transparent);
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 54px 54px;
+      opacity: .28;
+      mask-image: radial-gradient(circle at 50% 22%, black, transparent 72%);
     }
 
-    .scan {
-      opacity: 0;
-      transform: translateY(-100%);
-      background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--accent) 28%, transparent) 50%, transparent 58%);
-      transition: opacity .35s ease;
-    }
-
-    body[data-module="ice"] .scan {
-      opacity: 1;
-      animation: scan 4.4s linear infinite;
-    }
-
-    .ice-particles {
-      opacity: 0;
+    body::after {
       background:
-        radial-gradient(circle at 20% 20%, #fff 0 1px, transparent 2px),
-        radial-gradient(circle at 70% 34%, var(--accent) 0 1px, transparent 2px),
-        radial-gradient(circle at 42% 78%, #fff 0 1px, transparent 2px);
+        radial-gradient(circle at 16% 18%, #fff 0 1px, transparent 2px),
+        radial-gradient(circle at 72% 36%, var(--accent) 0 1px, transparent 2px),
+        radial-gradient(circle at 44% 76%, #fff 0 1px, transparent 2px);
       background-size: 170px 170px, 230px 230px, 190px 190px;
-      transition: opacity .35s ease;
-      animation: drift 15s linear infinite;
+      opacity: .38;
+      animation: particles 18s linear infinite;
     }
 
-    body[data-module="ice"] .ice-particles {
-      opacity: .42;
-    }
-
-    @keyframes scan {
-      to { transform: translateY(100%); }
-    }
-
-    @keyframes drift {
+    @keyframes particles {
       to { background-position: 0 170px, 0 230px, 0 190px; }
     }
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      border-bottom: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; }
+
+    .shell {
+      width: min(1120px, calc(100% - 24px));
+      margin: 12px auto;
+      position: relative;
+      min-height: calc(100vh - 24px);
+      padding: clamp(18px, 3vw, 40px) clamp(14px, 4vw, 58px) 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
       background:
-        linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 8%, transparent), transparent),
-        color-mix(in srgb, var(--bg0) 76%, transparent);
-      backdrop-filter: blur(22px);
+        linear-gradient(180deg, rgba(255,255,255,.055), transparent 34%),
+        radial-gradient(circle at 50% 22%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 26rem),
+        rgba(0, 3, 8, .38);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.035), inset 0 0 70px rgba(255,255,255,.035), 0 30px 120px rgba(0,0,0,.6);
+      overflow: hidden;
     }
 
-    .topbar-inner {
-      width: min(1200px, calc(100% - 28px));
-      min-height: 68px;
-      margin: 0 auto;
+    .shell::before,
+    .shell::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    .shell::before {
+      background:
+        linear-gradient(135deg, var(--accent) 0 24px, transparent 24px) top left / 92px 92px no-repeat,
+        linear-gradient(225deg, var(--accent) 0 24px, transparent 24px) top right / 92px 92px no-repeat,
+        linear-gradient(45deg, var(--accent) 0 24px, transparent 24px) bottom left / 92px 92px no-repeat,
+        linear-gradient(315deg, var(--accent) 0 24px, transparent 24px) bottom right / 92px 92px no-repeat;
+      opacity: .42;
+    }
+
+    .shell::after {
+      background:
+        linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 16%, transparent), transparent),
+        linear-gradient(180deg, transparent 0 52%, color-mix(in srgb, var(--accent) 12%, transparent) 53%, transparent 54%);
+      opacity: .44;
+      mix-blend-mode: screen;
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 5;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 18px;
-    }
-
-    .nav {
-      display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
+      margin-bottom: 16px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      min-width: 0;
       gap: 12px;
-      font-weight: 950;
+      min-width: 0;
       text-transform: uppercase;
-      line-height: 1;
+      font-weight: 950;
+      letter-spacing: .02em;
     }
 
     .brand img {
       width: 48px;
       height: 48px;
       object-fit: contain;
-      filter: drop-shadow(0 0 22px var(--glow));
-      transition: filter .35s ease;
+      filter: drop-shadow(0 0 24px var(--glow));
     }
 
     .brand small {
       display: block;
-      margin-top: 5px;
+      margin-top: 4px;
       color: var(--soft);
-      font-size: 11px;
+      font-size: 12px;
+      font-weight: 800;
       text-transform: none;
-      font-weight: 780;
     }
 
-    .brand::after {
-      content: "Live Modul Cockpit";
-      min-height: 32px;
-      display: inline-flex;
-      align-items: center;
-      margin-left: 8px;
-      padding: 0 12px;
-      border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
-      border-radius: 999px;
-      color: color-mix(in srgb, var(--accent2) 78%, white);
-      background: color-mix(in srgb, var(--accent) 8%, transparent);
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: .02em;
-      text-transform: uppercase;
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
-    .pill,
-    .btn {
-      min-height: 44px;
+    .nav a,
+    .cta {
+      min-height: 42px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 16px;
-      color: var(--text);
-      background: rgba(255, 255, 255, .065);
-      font-weight: 850;
-      cursor: pointer;
-      transition: transform .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
-    }
-
-    .pill {
-      color: var(--soft);
-      font-size: 14px;
-    }
-
-    .btn.primary {
-      color: color-mix(in srgb, var(--bg0) 88%, #000);
-      border: 0;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 18px 48px var(--glow);
-    }
-
-    .pill:hover,
-    .pill:focus-visible,
-    .btn:hover,
-    .btn:focus-visible,
-    .module-tab:hover,
-    .module-tab:focus-visible {
-      transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--accent) 50%, white);
-      outline: none;
+      border-radius: 8px;
+      padding: 0 14px;
+      color: var(--accent2);
+      background: color-mix(in srgb, var(--panel) 72%, transparent);
+      box-shadow: inset 0 0 18px color-mix(in srgb, var(--accent) 9%, transparent);
+      font-weight: 900;
     }
 
     .hero {
-      width: min(1200px, calc(100% - 28px));
-      margin: 0 auto;
       position: relative;
-      display: grid;
-      gap: 12px;
-      padding: 24px 0 34px;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 16px 0 auto;
-      height: min(720px, calc(100svh - 92px));
-      border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
-      border-radius: 8px;
-      background:
-        radial-gradient(circle at 50% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 24rem),
-        linear-gradient(180deg, rgba(255,255,255,.055), transparent 70%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 34px 120px rgba(0,0,0,.28);
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 16px 0 auto;
-      height: min(720px, calc(100svh - 92px));
-      background:
-        linear-gradient(90deg, transparent 0 49.8%, color-mix(in srgb, var(--accent) 28%, transparent) 50%, transparent 50.2%),
-        linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent) 10%, transparent), transparent);
-      opacity: .5;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .dial-section {
+      z-index: 2;
       display: grid;
       justify-items: center;
-      gap: 10px;
-      padding: 18px 0 26px;
-    }
-
-    .dial-hint {
-      color: var(--soft);
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: .02em;
       text-align: center;
+      gap: clamp(10px, 1.4vw, 16px);
     }
 
-    .dial-hint b {
-      color: var(--text);
-    }
-
-    .dial-crop {
+    .dial-wrap {
       position: relative;
-      width: 100%;
-      max-width: 560px;
-      height: clamp(210px, 47vw, 286px);
-      overflow: hidden;
+      width: min(690px, 100%);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      margin-top: -4px;
       touch-action: none;
-      filter: drop-shadow(0 26px 70px rgba(0,0,0,.48));
+      filter: drop-shadow(0 0 28px var(--glow)) drop-shadow(0 24px 60px rgba(0,0,0,.52));
+    }
+
+    .dial-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 5%;
+      border-radius: 50%;
+      border: 1px solid color-mix(in srgb, var(--accent) 70%, white);
+      box-shadow: 0 0 42px var(--glow), inset 0 0 46px color-mix(in srgb, var(--accent) 16%, transparent);
+    }
+
+    .pointer {
+      position: absolute;
+      top: 1%;
+      left: 50%;
+      width: clamp(42px, 9vw, 72px);
+      height: clamp(40px, 8vw, 66px);
+      transform: translateX(-50%);
+      z-index: 10;
+      clip-path: polygon(50% 100%, 0 18%, 100% 18%);
+      background: linear-gradient(180deg, var(--accent2), var(--accent) 54%, color-mix(in srgb, var(--accent3) 72%, #000));
+      border: 1px solid white;
+      box-shadow: 0 0 30px var(--glow);
     }
 
     .dial {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      width: clamp(330px, 78vw, 500px);
+      position: relative;
+      width: 86%;
       aspect-ratio: 1;
-      transform: translateX(-50%);
-      touch-action: none;
-      user-select: none;
-    }
-
-    .dial-pointer {
-      position: absolute;
-      left: 50%;
-      top: 5px;
-      width: 42px;
-      height: 74px;
-      transform: translateX(-50%);
-      z-index: 6;
-      border: 1px solid color-mix(in srgb, var(--accent) 46%, white);
-      border-radius: 999px;
-      background:
-        linear-gradient(180deg, var(--accent2), var(--accent) 34%, transparent 35%),
-        rgba(255,255,255,.06);
-      box-shadow: 0 0 24px var(--glow), inset 0 0 18px rgba(255,255,255,.08);
-      clip-path: polygon(50% 0, 100% 22%, 62% 100%, 38% 100%, 0 22%);
-    }
-
-    .dial-rotor {
-      position: absolute;
-      inset: 0;
+      border-radius: 50%;
       cursor: grab;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .dial.dragging { cursor: grabbing; }
+
+    .rotor {
+      position: absolute;
+      inset: 0;
       transform: rotate(var(--spin, 0deg));
-      transition: transform .55s cubic-bezier(.2, .9, .2, 1);
+      transition: transform .55s cubic-bezier(.18,.88,.22,1);
     }
 
-    .dial.dragging .dial-rotor {
-      cursor: grabbing;
-      transition: none;
-    }
+    .dial.dragging .rotor { transition: none; }
 
-    .dial-ring {
+    .segments {
       position: absolute;
       inset: 0;
       border-radius: 50%;
       background:
-        radial-gradient(circle at 38% 28%, rgba(255,255,255,.34), transparent 18%),
-        radial-gradient(circle at 50% 50%, #050609 0 26%, transparent 27%),
-        repeating-conic-gradient(from -2deg, rgba(255,255,255,.26) 0deg 2deg, transparent 2deg 11.25deg),
-        conic-gradient(from 0deg,
-          color-mix(in srgb, var(--accent) 70%, #2a2c36) 315deg 360deg, color-mix(in srgb, var(--accent) 70%, #2a2c36) 0deg 45deg,
-          #4a4d5c 45deg 135deg,
-          color-mix(in srgb, var(--accent2) 45%, #4a4d5c) 135deg 225deg,
-          #3a3d4a 225deg 315deg);
+        radial-gradient(circle, transparent 0 30%, rgba(0,0,0,.72) 31% 37%, transparent 38%),
+        conic-gradient(from -45deg,
+          color-mix(in srgb, var(--accent) 72%, #0d2334) 0 82deg,
+          rgba(255,255,255,.07) 82deg 90deg,
+          color-mix(in srgb, var(--panel2) 72%, #122338) 90deg 172deg,
+          rgba(255,255,255,.07) 172deg 180deg,
+          color-mix(in srgb, var(--panel2) 72%, #122338) 180deg 262deg,
+          rgba(255,255,255,.07) 262deg 270deg,
+          color-mix(in srgb, var(--panel2) 72%, #122338) 270deg 352deg,
+          rgba(255,255,255,.07) 352deg 360deg);
       box-shadow:
-        0 24px 90px rgba(0,0,0,.58),
-        0 0 80px var(--glow),
-        inset 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent),
-        inset 0 0 0 18px rgba(255,255,255,.045),
-        inset 0 0 0 58px rgba(0,0,0,.18);
-      transition: filter .35s ease;
-      filter: saturate(1) brightness(1);
+        inset 0 0 0 12px rgba(255,255,255,.055),
+        inset 0 0 0 22px color-mix(in srgb, var(--accent) 20%, transparent),
+        inset 0 0 0 104px rgba(0,0,0,.2),
+        0 0 60px var(--glow);
+      overflow: hidden;
     }
 
-    .dial-ring::before {
+    .segments::before,
+    .segments::after {
       content: "";
       position: absolute;
-      inset: 7%;
+      inset: 9%;
       border-radius: 50%;
-      border: 1px solid color-mix(in srgb, var(--accent2) 34%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent2) 36%, transparent);
       background:
-        conic-gradient(from 45deg, transparent 0 22deg, rgba(255,255,255,.18) 22deg 24deg, transparent 24deg 90deg),
-        radial-gradient(circle at 50% 50%, transparent 0 58%, rgba(255,255,255,.08) 59%, transparent 60%);
-      mask-image: radial-gradient(circle, transparent 0 31%, black 32% 78%, transparent 79%);
+        repeating-conic-gradient(from 0deg, rgba(255,255,255,.23) 0 1deg, transparent 1deg 10deg),
+        radial-gradient(circle, transparent 0 55%, rgba(255,255,255,.11) 56%, transparent 57%);
+      mask-image: radial-gradient(circle, transparent 0 32%, black 33% 82%, transparent 83%);
     }
 
-    .dial-ring::after {
-      content: "";
-      position: absolute;
-      inset: 29%;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,.26);
-      background:
-        radial-gradient(circle at 34% 28%, rgba(255,255,255,.22), transparent 22%),
-        repeating-conic-gradient(rgba(255,255,255,.18) 0deg 2deg, transparent 2deg 24deg);
-      opacity: .8;
-      animation: rim-spin 24s linear infinite;
+    .segments::after {
+      inset: 2%;
+      opacity: .46;
+      animation: slowspin 26s linear infinite;
     }
 
-    @keyframes rim-spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes slowspin { to { transform: rotate(360deg); } }
 
-    .dial.dragging .dial-ring {
-      filter: saturate(1.35) brightness(1.18);
-    }
-
-    .dial.dragging .dial-hub {
-      box-shadow: 0 18px 45px rgba(0,0,0,.42), inset 0 0 38px rgba(255,255,255,.07), 0 0 34px var(--glow);
-      transform: translate(-50%, -50%) scale(.96);
-    }
-
-    .dial-hub {
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-
-    .dial-tab {
+    .tab {
       position: absolute;
       left: 50%;
       top: 50%;
       width: 0;
       height: 0;
-      z-index: 5;
-      pointer-events: none;
-      transform:
-        rotate(var(--a))
-        translateY(calc(-1 * clamp(132px, 34vw, 210px)))
-        rotate(calc(-1 * var(--a)));
+      transform: rotate(var(--a)) translateY(calc(-1 * min(36vw, 245px))) rotate(calc(-1 * var(--a)));
+      z-index: 6;
     }
 
-    .dial-tab button {
-      position: absolute;
-      left: 0;
-      top: 0;
+    .tab button {
       transform: translate(-50%, -50%) rotate(calc(-1 * var(--spin, 0deg)));
-      min-width: 74px;
-      min-height: 38px;
-      padding: 0 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--soft);
+      width: clamp(104px, 20vw, 164px);
+      min-height: 48px;
+      border: 1px solid color-mix(in srgb, var(--accent) 42%, white);
+      border-radius: 8px;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.025)),
-        rgba(4, 5, 8, .74);
-      backdrop-filter: blur(14px);
-      font-weight: 900;
-      font-size: 12px;
+        linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.035)),
+        rgba(0,0,0,.52);
+      color: color-mix(in srgb, var(--text) 82%, var(--accent2));
+      box-shadow: inset 0 0 20px color-mix(in srgb, var(--accent) 12%, transparent), 0 0 22px color-mix(in srgb, var(--accent) 12%, transparent);
       text-transform: uppercase;
+      letter-spacing: .02em;
+      font-size: clamp(11px, 1.7vw, 17px);
+      font-weight: 950;
       cursor: pointer;
-      pointer-events: auto;
-      transition: transform .55s cubic-bezier(.2,.9,.2,1), background .3s ease, color .3s ease, box-shadow .3s ease;
+      transition: transform .55s cubic-bezier(.18,.88,.22,1), background .25s ease, box-shadow .25s ease;
     }
 
-    .dial.dragging .dial-tab button {
-      transition: none;
+    .dial.dragging .tab button { transition: none; }
+
+    .tab button.active {
+      color: #00131d;
+      background: linear-gradient(135deg, var(--accent2), var(--accent) 48%, var(--accent3));
+      box-shadow: 0 0 28px var(--glow), inset 0 0 22px rgba(255,255,255,.28);
     }
 
-    .dial-tab button.active {
-      color: color-mix(in srgb, var(--bg0) 92%, #000);
-      border-color: transparent;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 14px 34px var(--glow);
-    }
-
-    .dial-hub {
+    .hub {
       position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 34%;
-      aspect-ratio: 1;
-      transform: translate(-50%, -50%);
+      inset: 32%;
       border-radius: 50%;
-      z-index: 7;
-      border: 1px solid color-mix(in srgb, var(--accent) 30%, rgba(255,255,255,.23));
-      background:
-        radial-gradient(circle at 35% 28%, rgba(255,255,255,.3), transparent 18%),
-        radial-gradient(circle at 50% 64%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 54%),
-        linear-gradient(145deg, #252838, #07080d);
-      box-shadow:
-        0 18px 45px rgba(0,0,0,.42),
-        inset 0 0 38px rgba(255,255,255,.07),
-        0 0 28px color-mix(in srgb, var(--accent) 30%, transparent);
       display: grid;
       place-items: center;
-      text-align: center;
+      z-index: 8;
+      background:
+        radial-gradient(circle at 44% 38%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 44%),
+        linear-gradient(145deg, rgba(255,255,255,.15), rgba(0,0,0,.52));
+      border: 1px solid color-mix(in srgb, var(--accent2) 42%, transparent);
+      box-shadow: inset 0 0 34px color-mix(in srgb, var(--accent) 18%, transparent), 0 0 44px var(--glow);
       pointer-events: none;
     }
 
-    .dial-hub img {
-      width: 56%;
-      height: 56%;
+    .hub img {
+      width: 78%;
+      height: 78%;
       object-fit: contain;
-      filter: drop-shadow(0 0 16px var(--glow));
+      filter: drop-shadow(0 0 20px var(--glow));
     }
 
-    .copy {
+    .hub::after {
+      content: var(--module-icon);
+      position: absolute;
+      right: 8%;
+      bottom: 10%;
+      width: 42px;
+      height: 42px;
       display: grid;
-      justify-items: center;
-      text-align: center;
-      gap: 16px;
-      z-index: 4;
-      max-width: 640px;
-      margin: 0 auto;
+      place-items: center;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--accent) 22%, #06101a);
+      border: 1px solid var(--line);
+      color: var(--accent2);
+      font-size: 12px;
+      font-weight: 950;
     }
 
     .status {
-      width: fit-content;
       display: inline-flex;
       align-items: center;
-      gap: 9px;
-      padding: 9px 12px;
+      gap: 12px;
+      min-height: 66px;
+      padding: 0 26px;
       border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255,255,255,.07);
-      color: var(--soft);
-      font-size: 14px;
-      font-weight: 820;
+      border-radius: 8px;
+      background: linear-gradient(90deg, rgba(255,255,255,.08), color-mix(in srgb, var(--accent) 12%, transparent), rgba(255,255,255,.04));
+      box-shadow: inset 0 0 24px color-mix(in srgb, var(--accent) 12%, transparent), 0 0 34px color-mix(in srgb, var(--accent) 18%, transparent);
+      color: var(--accent2);
+      font-size: clamp(16px, 2.5vw, 27px);
+      font-weight: 900;
+      letter-spacing: .03em;
     }
 
     .status::before {
       content: "";
-      width: 9px;
-      height: 9px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      background: var(--good);
-      box-shadow: 0 0 0 8px rgba(115, 255, 194, .12), 0 0 22px rgba(115, 255, 194, .72);
+      background: var(--accent);
+      box-shadow: 0 0 0 12px color-mix(in srgb, var(--accent) 18%, transparent), 0 0 30px var(--glow);
     }
 
     h1 {
-      margin: 0;
-      font-size: clamp(42px, 5.7vw, 78px);
+      margin: 10px 0 0;
+      color: transparent;
+      background: linear-gradient(180deg, #fff, var(--accent2) 32%, var(--accent) 64%, #fff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      filter: drop-shadow(0 0 24px var(--glow));
+      font-size: clamp(48px, 11vw, 116px);
       line-height: .86;
       letter-spacing: 0;
       text-transform: uppercase;
     }
 
-    .gradient-text {
-      display: inline-block;
-      font-size: .84em;
-      color: transparent;
-      background: linear-gradient(120deg, #fff, var(--accent2) 36%, var(--accent));
-      -webkit-background-clip: text;
-      background-clip: text;
-      filter: drop-shadow(0 0 28px color-mix(in srgb, var(--accent) 24%, transparent));
-    }
-
     .lead {
+      width: min(760px, 100%);
       margin: 0;
-      color: color-mix(in srgb, var(--soft) 82%, white);
-      font-size: clamp(17px, 2vw, 22px);
-      line-height: 1.58;
+      color: color-mix(in srgb, var(--soft) 84%, white);
+      font-size: clamp(17px, 2.6vw, 26px);
+      line-height: 1.45;
+      text-wrap: balance;
     }
 
-    .actions {
+    .cta {
+      position: relative;
+      width: min(520px, 100%);
+      min-height: 74px;
+      margin-top: 6px;
+      font-size: clamp(22px, 4vw, 34px);
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 30%, transparent), rgba(255,255,255,.08)),
+        rgba(0,0,0,.3);
+      overflow: hidden;
+    }
+
+    .cta span { margin-left: auto; font-size: 1.15em; }
+
+    .kicker {
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .visual {
-      position: relative;
-      min-height: 450px;
-      display: grid;
       align-items: center;
-      justify-items: center;
-      perspective: 1200px;
+      gap: 14px;
+      width: min(680px, 100%);
+      margin-top: 12px;
+      color: var(--soft);
+      text-transform: uppercase;
+      font-weight: 950;
+      letter-spacing: .08em;
     }
 
-    .holo-card {
-      position: relative;
-      width: min(90%, 470px);
-      aspect-ratio: 1;
+    .kicker::before,
+    .kicker::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
+    }
+
+    .benefits {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 2px;
+    }
+
+    .benefit,
+    .module-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.025)), var(--panel);
+      box-shadow: inset 0 0 28px color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+
+    .benefit {
+      min-height: 150px;
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      gap: 9px;
+      padding: 18px;
+    }
+
+    .benefit i {
+      width: 58px;
+      height: 58px;
       display: grid;
       place-items: center;
-      border: 1px solid color-mix(in srgb, var(--accent) 32%, white);
-      border-radius: 8px;
-      background:
-        radial-gradient(circle at 52% 45%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 44%),
-        linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.035));
-      box-shadow: 0 26px 90px rgba(0,0,0,.42), inset 0 0 70px color-mix(in srgb, var(--accent) 14%, transparent);
-      transform: rotateX(6deg) rotateY(-8deg);
-      transition: transform .2s ease, border-color .5s ease, box-shadow .5s ease;
-      overflow: hidden;
-    }
-
-    .holo-card.is-pulsing {
-      animation: pulse-card .55s ease;
-    }
-
-    .holo-card::before,
-    .holo-card::after {
-      content: "";
-      position: absolute;
-      inset: 12%;
+      border: 1px solid var(--line);
       border-radius: 50%;
-      border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
-      animation: orbit 12s linear infinite;
+      color: var(--accent2);
+      font-style: normal;
+      font-size: 24px;
+      font-weight: 950;
+      box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 20%, transparent);
     }
 
-    .holo-card::after {
-      inset: 22%;
-      border-style: dashed;
-      animation-duration: 8s;
-      animation-direction: reverse;
+    .benefit b {
+      text-transform: uppercase;
+      color: var(--accent2);
+      font-size: clamp(15px, 2vw, 20px);
     }
 
-    .holo-card img {
-      position: relative;
-      z-index: 2;
-      width: 86%;
-      height: 86%;
-      object-fit: contain;
-      filter: drop-shadow(0 28px 36px rgba(0,0,0,.45)) drop-shadow(0 0 26px var(--glow));
-    }
-
-    @keyframes orbit {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes pulse-card {
-      0% { filter: brightness(1); }
-      45% { filter: brightness(1.38) saturate(1.28); }
-      100% { filter: brightness(1); }
-    }
-
-    .content {
-      width: min(1200px, calc(100% - 28px));
-      margin: 0 auto 42px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .profile,
-    .module-panel {
-      min-height: 500px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--glass);
-      box-shadow: 0 24px 80px rgba(0,0,0,.3);
-      overflow: hidden;
-    }
-
-    .profile {
-      position: relative;
-    }
-
-    .profile img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: saturate(1.08) contrast(1.05);
-      transition: filter .5s ease, opacity .5s ease;
-    }
-
-    body[data-module="ice"] .profile img {
-      opacity: .32;
-      filter: grayscale(.18) saturate(.78) contrast(1.1);
-    }
-
-    .profile::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      background:
-        linear-gradient(135deg, rgba(111,225,255,.16), transparent 40%),
-        radial-gradient(circle at 80% 20%, rgba(230,251,255,.2), transparent 20rem);
-      transition: opacity .5s ease;
-    }
-
-    body[data-module="ice"] .profile::after {
-      opacity: 1;
-    }
-
-    .profile-info {
-      position: absolute;
-      z-index: 2;
-      left: 18px;
-      right: 18px;
-      bottom: 18px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(5, 6, 9, .76);
-      backdrop-filter: blur(18px);
-    }
-
-    .profile-info strong {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 22px;
-    }
-
-    .profile-info span {
+    .benefit span {
       color: var(--soft);
-      line-height: 1.45;
+      line-height: 1.35;
+      font-size: 15px;
     }
 
     .module-panel {
-      min-height: auto;
-      padding: 24px;
+      width: 100%;
+      margin-top: 18px;
       display: grid;
+      grid-template-columns: 1.1fr .9fr;
       gap: 18px;
-      align-content: start;
-      transition: background .5s ease, border-color .5s ease;
-      background:
-        radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 24rem),
-        linear-gradient(135deg, rgba(255,255,255,.11), rgba(255,255,255,.035)),
-        var(--glass);
-    }
-
-    body[data-module="ice"] .module-panel {
-      border-color: rgba(111, 225, 255, .32);
-      background:
-        linear-gradient(135deg, rgba(111,225,255,.12), transparent 40%),
-        var(--glass2);
-    }
-
-    .panel-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
+      padding: clamp(18px, 3vw, 26px);
+      text-align: left;
     }
 
     .module-panel h2 {
-      margin: 0;
-      font-size: clamp(32px, 4.3vw, 60px);
-      line-height: .92;
-      letter-spacing: 0;
+      margin: 0 0 8px;
+      color: var(--accent2);
+      font-size: clamp(26px, 4vw, 42px);
       text-transform: uppercase;
-      overflow-wrap: break-word;
-      hyphens: auto;
+      letter-spacing: .02em;
     }
 
     .module-panel p {
       margin: 0;
-      color: color-mix(in srgb, var(--soft) 84%, white);
+      color: var(--soft);
       font-size: 17px;
-      line-height: 1.65;
+      line-height: 1.55;
     }
 
-    .chip-row,
-    .cards {
+    .chips {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
+      margin-top: 16px;
     }
 
     .chip {
       border: 1px solid var(--line);
       border-radius: 999px;
-      padding: 8px 11px;
-      color: var(--soft);
-      background: rgba(255,255,255,.055);
+      padding: 8px 12px;
+      color: var(--accent2);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      font-weight: 850;
       font-size: 13px;
-      font-weight: 800;
     }
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
     }
 
     .card {
-      min-height: 158px;
-      border: 1px solid var(--line);
+      min-height: 118px;
+      border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
       border-radius: 8px;
-      padding: 16px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.03)),
-        rgba(255,255,255,.045);
-      display: grid;
-      align-content: space-between;
-      position: relative;
-      overflow: hidden;
-      transition: transform .25s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease;
-    }
-
-    .card::before,
-    .prep-panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent 0 28%, rgba(255,255,255,.16) 42%, transparent 58%);
-      transform: translateX(-120%);
-      transition: transform .75s ease;
-      pointer-events: none;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: color-mix(in srgb, var(--accent) 44%, white);
-      box-shadow: 0 18px 54px color-mix(in srgb, var(--accent) 18%, transparent);
-    }
-
-    .card:hover::before,
-    .prep-panel:hover::before {
-      transform: translateX(120%);
+      padding: 14px;
+      background: rgba(0,0,0,.22);
     }
 
     .card b {
       display: block;
-      font-size: 19px;
+      margin-bottom: 6px;
+      color: var(--accent2);
+      text-transform: uppercase;
+      font-size: 14px;
     }
 
     .card span {
       color: var(--soft);
-      line-height: 1.42;
       font-size: 14px;
-    }
-
-    .section-shell {
-      width: min(1200px, calc(100% - 28px));
-      margin: 0 auto 42px;
-      scroll-margin-top: 92px;
-    }
-
-    .content,
-    .section-shell,
-    .contact {
-      animation: luxury-rise .9s cubic-bezier(.2,.9,.2,1) both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 28%;
-    }
-
-    .section-kicker {
-      width: fit-content;
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      margin-bottom: 14px;
-      padding: 8px 11px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--soft);
-      background: rgba(255,255,255,.055);
-      font-size: 13px;
-      font-weight: 850;
-      text-transform: uppercase;
-    }
-
-    .section-kicker::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 18px var(--glow);
-    }
-
-    .section-title {
-      margin: 0;
-      max-width: 880px;
-      font-size: clamp(34px, 5vw, 74px);
-      line-height: .92;
-      letter-spacing: 0;
-      text-transform: uppercase;
-    }
-
-    .section-lead {
-      max-width: 780px;
-      margin: 16px 0 0;
-      color: color-mix(in srgb, var(--soft) 84%, white);
-      font-size: clamp(17px, 2vw, 21px);
-      line-height: 1.62;
-    }
-
-    .about-kicker {
-      margin-top: 34px;
-    }
-
-    .about-title {
-      max-width: 980px;
-      font-size: clamp(32px, 4.4vw, 64px);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.32fr) minmax(260px, .68fr);
-      gap: 18px;
-      align-items: stretch;
-      margin-top: 18px;
-    }
-
-    .about-panel,
-    .stat-panel,
-    .prep-panel {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.035)),
-        var(--glass);
-      box-shadow: 0 24px 80px rgba(0,0,0,.26);
-    }
-
-    .about-panel {
-      padding: 26px;
-      display: grid;
-      gap: 18px;
-      align-content: start;
-    }
-
-    .about-panel p {
-      margin: 0;
-      color: color-mix(in srgb, var(--soft) 84%, white);
-      font-size: 17px;
-      line-height: 1.7;
-    }
-
-    .about-highlights {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .highlight {
-      min-height: 116px;
-      display: grid;
-      align-content: space-between;
-      gap: 12px;
-      padding: 15px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255,255,255,.052);
-    }
-
-    .highlight b {
-      font-size: 26px;
-      color: var(--text);
-      line-height: 1;
-    }
-
-    .highlight span {
-      color: var(--soft);
-      font-size: 13px;
       line-height: 1.35;
-      font-weight: 760;
     }
 
-    .stat-panel {
-      position: relative;
-      overflow: hidden;
-      min-height: 320px;
-      display: grid;
-      align-content: end;
-      padding: 18px;
-    }
-
-    .stat-panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, transparent 0 38%, rgba(5,6,10,.94)),
-        url("Benjamin.jpg") center / cover;
-      filter: saturate(.92) contrast(1.02);
-      transform: scale(1.02);
-    }
-
-    .stat-panel::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 72% 20%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 18rem);
-    }
-
-    .stat-content {
+    .contact {
       position: relative;
       z-index: 2;
-      display: grid;
-      gap: 12px;
-    }
-
-    .stat-content strong {
-      font-size: clamp(22px, 2.4vw, 32px);
-      line-height: .98;
-      text-transform: uppercase;
-    }
-
-    .stat-content span {
-      color: color-mix(in srgb, var(--soft) 84%, white);
-      line-height: 1.55;
-    }
-
-    .prep-section {
-      margin-top: 28px;
-      padding: 26px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background:
-        radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 24rem),
-        linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.025)),
-        var(--glass);
-      box-shadow: 0 24px 80px rgba(0,0,0,.26);
-    }
-
-    .prep-header {
-      display: grid;
-      grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
-      gap: 34px;
-      align-items: start;
-      margin-bottom: 20px;
-    }
-
-    .prep-header h2 {
-      margin: 0;
-      font-size: clamp(30px, 3.9vw, 52px);
-      line-height: .96;
-      text-transform: uppercase;
-      overflow-wrap: break-word;
-    }
-
-    .prep-header p {
-      margin: 0;
-      color: color-mix(in srgb, var(--soft) 84%, white);
-      font-size: 17px;
-      line-height: 1.65;
-    }
-
-    .prep-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .prep-panel {
-      min-height: 170px;
-      padding: 18px;
-      display: grid;
-      align-content: space-between;
-      gap: 16px;
-      position: relative;
-      overflow: hidden;
-      transition: transform .2s ease, border-color .2s ease, background .2s ease;
-    }
-
-    .prep-panel:hover {
-      transform: translateY(-4px);
-      border-color: color-mix(in srgb, var(--accent) 44%, white);
-      background: rgba(255,255,255,.07);
-    }
-
-    .prep-icon {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      color: color-mix(in srgb, var(--bg0) 92%, #000);
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 14px 34px var(--glow);
-      font-weight: 950;
-    }
-
-    .prep-panel h3 {
-      margin: 0 0 7px;
-      font-size: 20px;
-      line-height: 1.05;
-    }
-
-    .prep-panel p {
-      margin: 0;
-      color: var(--soft);
-      font-size: 14px;
-      line-height: 1.48;
-    }
-
-    .contact {
-      width: min(1200px, calc(100% - 28px));
-      margin: 0 auto 26px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 22px;
-      background: linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.035));
+      width: min(1120px, calc(100% - 24px));
+      margin: 0 auto 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
+      gap: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: var(--panel);
     }
 
-    .contact strong {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 24px;
+    .contact strong { display: block; color: var(--accent2); font-size: 20px; }
+    .contact span { color: var(--soft); }
+
+    .reveal {
+      animation: reveal .46s ease;
     }
 
-    .contact span {
-      color: var(--soft);
+    @keyframes reveal {
+      from { opacity: .35; transform: translateY(12px) scale(.985); filter: blur(4px); }
+      to { opacity: 1; transform: none; filter: none; }
     }
 
-    .frost-crystals {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity .6s ease;
-    }
-
-    body[data-module="ice"] .frost-crystals {
-      opacity: 1;
-    }
-
-    .frost-crystals span {
-      position: absolute;
-      top: -8%;
-      font-size: 22px;
-      color: rgba(230, 251, 255, .55);
-      filter: drop-shadow(0 0 8px rgba(111,225,255,.6));
-      animation: crystal-fall linear infinite;
-    }
-
-    @keyframes crystal-fall {
-      to { transform: translateY(112vh) rotate(360deg); }
-    }
-
-    .frost-vignette {
-      position: fixed;
-      inset: 0;
-      z-index: 15;
-      pointer-events: none;
-      opacity: 0;
-      background:
-        radial-gradient(circle at 50% 50%, transparent 55%, rgba(6, 24, 36, .5) 100%),
-        linear-gradient(rgba(226, 250, 255, .16), transparent 14%),
-        linear-gradient(to top, rgba(226, 250, 255, .16), transparent 14%);
-      mask-image: radial-gradient(circle at 50% 45%, transparent 40%, black 96%);
-      transition: opacity .6s ease;
-    }
-
-    body[data-module="ice"] .frost-vignette {
-      opacity: 1;
-    }
-
-    .content.ice-build,
-    .contact.ice-build {
-      animation: reveal-up .8s cubic-bezier(.2,.9,.2,1) both;
-    }
-
-    .contact.ice-build {
-      animation-delay: .16s;
-    }
-
-    @keyframes reveal-up {
-      from { opacity: 0; transform: translateY(34px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes luxury-rise {
-      from {
-        opacity: .35;
-        transform: translateY(42px) scale(.985);
-        filter: blur(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-      }
-    }
-
-    @media (max-width: 980px) {
-      .content,
-      .about-grid,
-      .prep-header {
-        grid-template-columns: 1fr;
-      }
-
-      .prep-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .visual {
-        min-height: 360px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .page {
-        padding-bottom: 28px;
+    @media (min-width: 1024px) {
+      .shell {
+        display: grid;
+        align-content: start;
       }
 
       .topbar {
-        position: sticky;
+        margin-bottom: 6px;
       }
 
-      .topbar-inner {
-        width: calc(100% - 20px);
-        min-height: auto;
-        padding: 10px 0;
-        gap: 10px;
+      .dial-wrap {
+        width: clamp(590px, 50vw, 700px);
+        margin-top: -10px;
       }
 
-      .brand {
-        gap: 9px;
-      }
-
-      .brand span {
-        max-width: 210px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .brand::after {
-        display: none;
-      }
-
-      .nav {
-        display: none;
-      }
-
-      .hero,
-      .content,
-      .section-shell,
-      .contact {
-        width: calc(100vw - 20px);
-        max-width: calc(100vw - 20px);
-      }
-
-      .hero {
-        padding-top: 8px;
-      }
-
-      .lead {
-        overflow-wrap: anywhere;
+      .tab {
+        transform: rotate(var(--a)) translateY(calc(-1 * clamp(202px, 18vw, 242px))) rotate(calc(-1 * var(--a)));
       }
 
       h1 {
-        font-size: clamp(30px, 9.6vw, 40px);
+        font-size: clamp(82px, 8.2vw, 124px);
       }
 
-      .gradient-text {
-        font-size: .82em;
+      .lead {
+        font-size: clamp(19px, 1.7vw, 24px);
       }
 
-      .actions {
-        justify-content: center;
+      .benefit {
+        min-height: 142px;
+      }
+    }
+
+    @media (min-width: 1440px) {
+      .shell,
+      .contact {
+        width: min(1180px, calc(100% - 48px));
       }
 
-      .actions .btn {
-        flex: 1 1 100%;
+      .dial-wrap {
+        width: 720px;
+      }
+    }
+
+    @media (max-width: 820px) {
+      body {
+        background:
+          radial-gradient(circle at 50% 10%, var(--glow), transparent 17rem),
+          radial-gradient(circle at var(--mx, 50%) var(--my, 22%), color-mix(in srgb, var(--accent) 28%, transparent), transparent 14rem),
+          linear-gradient(160deg, var(--bg0), var(--bg1) 46%, #010204);
       }
 
-      .visual {
-        min-height: 300px;
+      .shell {
+        width: min(620px, calc(100% - 16px));
+        margin: 8px auto;
+        min-height: calc(100vh - 16px);
+        padding: 16px 12px 24px;
       }
 
-      .holo-card {
-        width: min(100%, 320px);
+      .topbar { align-items: flex-start; }
+      .brand::after { display: none; }
+      .nav { display: none; }
+
+      .hero {
+        gap: 12px;
+      }
+
+      .dial-wrap {
+        width: min(100%, 460px);
+        margin-top: 0;
       }
 
       .dial {
-        width: clamp(250px, 86vw, 330px);
+        width: 84%;
       }
 
-      .dial-tab {
-        transform:
-          rotate(var(--a))
-          translateY(calc(-1 * clamp(104px, 32vw, 132px)))
-          rotate(calc(-1 * var(--a)));
+      .segments {
+        box-shadow:
+          inset 0 0 0 8px rgba(255,255,255,.055),
+          inset 0 0 0 16px color-mix(in srgb, var(--accent) 20%, transparent),
+          inset 0 0 0 72px rgba(0,0,0,.2),
+          0 0 48px var(--glow);
       }
 
-      .dial-tab button {
-        min-width: 58px;
-        min-height: 36px;
-        font-size: 11px;
-        padding: 0 8px;
-      }
+      .tab { transform: rotate(var(--a)) translateY(calc(-1 * clamp(128px, 35vw, 170px))) rotate(calc(-1 * var(--a))); }
+      .tab button { width: clamp(82px, 23vw, 112px); min-height: 40px; padding: 0 7px; font-size: clamp(9px, 2.6vw, 12px); }
+      .status { min-height: 54px; padding: 0 14px; font-size: clamp(15px, 4.2vw, 20px); }
+      .status::before { width: 14px; height: 14px; box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 18%, transparent), 0 0 24px var(--glow); }
+      h1 { font-size: clamp(44px, 13vw, 72px); line-height: .9; }
+      .lead { width: min(520px, 100%); font-size: clamp(16px, 4.4vw, 19px); line-height: 1.42; }
+      .cta { min-height: 60px; font-size: clamp(20px, 6vw, 28px); }
+      .kicker { gap: 9px; font-size: 12px; }
+      .benefits, .module-panel, .cards { grid-template-columns: 1fr; }
+      .benefit { min-height: 132px; }
+      .module-panel { margin-top: 12px; }
+      .contact { flex-direction: column; align-items: flex-start; }
+      .contact .cta { width: 100%; }
+    }
 
-      .profile,
-      .module-panel {
-        min-height: 390px;
+    @media (max-width: 520px) {
+      .shell { margin: 0; width: 100%; min-height: 100vh; border-left: 0; border-right: 0; border-radius: 0; }
+      .shell::before {
+        background:
+          linear-gradient(135deg, var(--accent) 0 16px, transparent 16px) top left / 64px 64px no-repeat,
+          linear-gradient(225deg, var(--accent) 0 16px, transparent 16px) top right / 64px 64px no-repeat,
+          linear-gradient(45deg, var(--accent) 0 16px, transparent 16px) bottom left / 64px 64px no-repeat,
+          linear-gradient(315deg, var(--accent) 0 16px, transparent 16px) bottom right / 64px 64px no-repeat;
       }
+      .brand span { font-size: 13px; }
+      .brand img { width: 42px; height: 42px; }
+      .dial-wrap { width: min(100%, 392px); margin-top: 4px; }
+      .pointer { width: 44px; height: 42px; }
+      .tab { transform: rotate(var(--a)) translateY(calc(-1 * clamp(118px, 34vw, 142px))) rotate(calc(-1 * var(--a))); }
+      .tab button { width: clamp(76px, 23vw, 88px); min-height: 36px; font-size: clamp(8px, 2.4vw, 10px); }
+      .hub { inset: 30%; }
+      .hub::after { width: 34px; height: 34px; font-size: 10px; }
+      .status { max-width: 100%; }
+      .status::before { flex: 0 0 auto; }
+      .lead { font-size: 16px; }
+      .benefit { min-height: 116px; padding: 14px; }
+      .benefit i { width: 48px; height: 48px; font-size: 19px; }
+      .benefit span, .module-panel p { font-size: 15px; }
+      .module-panel { padding: 16px; }
+      .contact { width: 100%; margin: 0; border-left: 0; border-right: 0; border-radius: 0; }
+    }
 
-      .module-panel {
-        padding: 18px;
-      }
-
-      .panel-top,
-      .contact {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .about-panel,
-      .prep-section {
-        padding: 18px;
-      }
-
-      .about-highlights,
-      .prep-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .stat-panel {
-        min-height: 360px;
-      }
-
-      .cards {
-        display: flex;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        padding-bottom: 6px;
-      }
-
-      .card {
-        min-width: 78vw;
-        scroll-snap-align: start;
-      }
-
+    @media (max-width: 380px) {
+      .brand small { font-size: 10px; }
+      .dial-wrap { width: min(100%, 344px); }
+      .tab { transform: rotate(var(--a)) translateY(calc(-1 * clamp(106px, 33vw, 126px))) rotate(calc(-1 * var(--a))); }
+      .tab button { width: 72px; min-height: 34px; }
+      h1 { font-size: clamp(38px, 12.5vw, 50px); }
+      .lead { font-size: 15px; }
+      .status { font-size: 14px; padding: 0 10px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         animation-duration: .001ms !important;
         animation-iteration-count: 1 !important;
         scroll-behavior: auto !important;
@@ -1341,381 +774,233 @@
     }
   </style>
 </head>
-<body data-module="clean">
-  <div class="page">
-    <div class="mesh"></div>
-    <div class="scan"></div>
-    <div class="ice-particles"></div>
-    <div class="frost-crystals" id="frostCrystals" aria-hidden="true"></div>
-    <div class="frost-vignette" aria-hidden="true"></div>
-
+<body data-mode="ice">
+  <main class="shell" id="start">
     <header class="topbar">
-      <div class="topbar-inner">
-        <a class="brand" href="#start" aria-label="Powertech Performance Start">
-          <img id="brandLogo" src="Logo normal.png" alt="Powertech Performance Logo">
-          <span>Powertech Performance<small>Benjamin Lemmer · Erfurt</small></span>
-        </a>
-        <nav class="nav" aria-label="Navigation">
-          <a class="pill" href="#aufbereitung">Aufbereitung</a>
-          <a class="pill" href="#kontakt">Kontakt</a>
-        </nav>
-      </div>
+      <a class="brand" href="#start" aria-label="Powertech Performance Start">
+        <img id="brandLogo" src="logo with ice.png" alt="Powertech Performance Logo">
+        <span>Powertech Performance<small>Benjamin Lemmer · Erfurt</small></span>
+      </a>
+      <nav class="nav" aria-label="Navigation">
+        <a href="#modul">Modul</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
     </header>
 
-    <main>
-      <section class="hero" id="start">
-        <div class="dial-section">
-          <div class="dial-crop">
-            <div class="dial" id="dial" aria-label="Modul-Zahnrad – gedrückt halten und drehen zum Wechseln des Service">
-              <div class="dial-pointer" aria-hidden="true"></div>
-              <div class="dial-rotor" id="dialRotor">
-                <div class="dial-ring"></div>
-                <div class="dial-tab" style="--a:0deg">
-                  <button type="button" data-module="clean" aria-pressed="true">Aufbereitung</button>
-                </div>
-                <div class="dial-tab" style="--a:90deg">
-                  <button type="button" data-module="polish" aria-pressed="false">Polieren</button>
-                </div>
-                <div class="dial-tab" style="--a:180deg">
-                  <button type="button" data-module="seal" aria-pressed="false">Versiegeln</button>
-                </div>
-                <div class="dial-tab" style="--a:270deg">
-                  <button type="button" data-module="ice" aria-pressed="false">Trockeneis</button>
-                </div>
-              </div>
-              <div class="dial-hub" aria-hidden="true">
-                <img id="hubLogo" src="Logo normal.png" alt="">
-              </div>
-            </div>
+    <section class="hero" aria-label="Interaktives Service-Modulrad">
+      <div class="dial-wrap">
+        <div class="pointer" aria-hidden="true"></div>
+        <div class="dial" id="dial" aria-label="Drehrad gedrückt halten und drehen">
+          <div class="rotor" id="rotor">
+            <div class="segments"></div>
+            <div class="tab" style="--a:0deg"><button type="button" data-mode="prep">Aufbereitung</button></div>
+            <div class="tab" style="--a:90deg"><button type="button" data-mode="polish">Polieren</button></div>
+            <div class="tab" style="--a:180deg"><button type="button" data-mode="seal">Versiegeln</button></div>
+            <div class="tab" style="--a:270deg"><button type="button" data-mode="ice">Trockeneis</button></div>
           </div>
-          <p class="dial-hint">Gedrückt halten und drehen &middot; aktiv: <b id="dialActiveLabel">Aufbereitung</b></p>
-        </div>
-
-        <div class="copy">
-          <div class="status" id="statusText">Modulrad aktiv</div>
-          <h1><span id="headlineA">Auto</span><br><span class="gradient-text" id="headlineB">Aufbereitung</span></h1>
-          <p class="lead" id="leadText">Drehe am Rad und die komplette Seite verwandelt sich passend zum Service. Aufbereitung, Polieren, Versiegeln oder Trockeneis wirken wie eigene Modi in einer App.</p>
-          <div class="actions">
-            <a class="btn primary" href="tel:+491737373574">Jetzt anrufen</a>
+          <div class="hub" aria-hidden="true">
+            <img id="hubLogo" src="logo with ice.png" alt="">
           </div>
         </div>
+      </div>
 
-        <div class="visual">
-          <div class="holo-card" id="holoCard" aria-hidden="true">
-            <img id="heroLogo" src="Logo normal.png" alt="">
-          </div>
-        </div>
-      </section>
+      <div class="status" id="statusText">Detailing-Modus aktiv</div>
+      <h1 id="headline">Trockeneis</h1>
+      <p class="lead" id="leadText">Slide durch das Modulrad. Die komplette Seite verwandelt sich in den Trockeneis-Modus: kraftvolle, trockene Reinigung mit Eispräzision für Oberflächen, die mehr verdienen.</p>
+      <a class="cta" href="tel:+491737373574">Jetzt anrufen <span>→</span></a>
 
-      <section class="content" id="module">
-        <article class="module-panel">
-          <div class="panel-top">
-            <div>
-              <h2 id="panelTitle">Auto-Aufbereitung</h2>
-              <p id="panelText">Der saubere Komplettmodus: Innenraum, Außenpflege, Details und Finish werden als ein wertiger Gesamtauftritt geplant.</p>
-            </div>
-            <a class="btn primary" href="tel:+491737373574">Termin</a>
-          </div>
-          <div class="chip-row" id="chips"></div>
-          <div class="cards" id="cards"></div>
-        </article>
-      </section>
+      <div class="kicker" id="benefitTitle">Vorteile Trockeneis</div>
+      <div class="benefits" id="benefits"></div>
 
-      <section class="section-shell" id="aufbereitung">
-        <span class="section-kicker">Aufbereitung</span>
-        <h2 class="section-title">Was wir für dein Fahrzeug anbieten.</h2>
-        <p class="section-lead">Die Autoaufbereitung ist der Kern von Powertech Performance: Innenraum, Polster, Motorraum, Lack, Schutz und Spezialreinigung werden als sauberer Prozess gedacht.</p>
-
-        <div class="prep-section">
-          <div class="prep-header">
-            <h2>Was ist Autoaufbereitung?</h2>
-            <p>Autoaufbereitung ist die gründliche Pflege und optische Wiederherstellung eines Fahrzeugs. Je nach Zustand geht es um Innenraum, Polster, Motorraum, Lack, Schutz und Spezialreinigung.</p>
-          </div>
-
-          <div class="prep-grid">
-            <article class="prep-panel">
-              <div class="prep-icon">01</div>
-              <div>
-                <h3>Innenraum-Reinigung</h3>
-                <p>Armaturen, Einstiege, Verkleidungen, Ablagen und sichtbare Flächen werden gründlich gereinigt.</p>
-              </div>
-            </article>
-            <article class="prep-panel">
-              <div class="prep-icon">02</div>
-              <div>
-                <h3>Polsterreinigung</h3>
-                <p>Sitze, Stoffe und Polster werden gezielt aufgefrischt, damit der Innenraum wieder gepflegt wirkt.</p>
-              </div>
-            </article>
-            <article class="prep-panel">
-              <div class="prep-icon">03</div>
-              <div>
-                <h3>Motorwäsche</h3>
-                <p>Der Motorraum wird optisch aufgewertet und von sichtbaren Verschmutzungen befreit.</p>
-              </div>
-            </article>
-            <article class="prep-panel">
-              <div class="prep-icon">04</div>
-              <div>
-                <h3>Polieren</h3>
-                <p>Der Lack erhält mehr Tiefe, Glanz und Ruhe in der Oberfläche.</p>
-              </div>
-            </article>
-            <article class="prep-panel">
-              <div class="prep-icon">05</div>
-              <div>
-                <h3>Versiegeln</h3>
-                <p>Schutz für den Lack, besserer Abperleffekt und leichtere Pflege nach der Aufbereitung.</p>
-              </div>
-            </article>
-            <article class="prep-panel">
-              <div class="prep-icon">ICE</div>
-              <div>
-                <h3>Trockeneis</h3>
-                <p>Für technische Bereiche, Motorraum, Unterboden und schwer erreichbare Stellen als Spezialservice.</p>
-              </div>
-            </article>
-          </div>
-        </div>
-
-        <span class="section-kicker about-kicker">Über uns</span>
-        <h2 class="section-title about-title">Automobil-Detailing aus Erfurt, gemacht bis ins Detail.</h2>
-        <p class="section-lead">Powertech Performance steht für Fahrzeugpflege mit Anspruch: nicht schnell drüberwischen, sondern sauber hinschauen, gezielt arbeiten und jedes Auto so behandeln, dass der Unterschied sichtbar und fühlbar wird.</p>
-
-        <div class="about-grid">
-          <article class="about-panel">
-            <div>
-              <span class="section-kicker">Über uns</span>
-              <p>Powertech Performance aus Erfurt ist die Adresse für alle, die ihr Fahrzeug nicht nur sauber, sondern wirklich gepflegt sehen möchten. Benjamin Lemmer verbindet praktische Erfahrung, Geduld und ein Auge für Oberflächen, Kanten, Spalten und Details.</p>
-            </div>
-            <p>Durch mehrere Jahre Arbeit an vielen, vielen Autos ist ein klarer Anspruch entstanden: jedes Fahrzeug bekommt die Aufmerksamkeit, die es braucht. Gerade in Erfurt zählt Powertech Performance zu den wenigen Anbietern, die Automobil-Detailing wirklich bis ins Detail betreiben.</p>
-            <div class="about-highlights">
-              <div class="highlight"><b>Erfurt</b><span>Regional, direkt erreichbar und persönlich.</span></div>
-              <div class="highlight"><b>Viele Autos</b><span>Erfahrung aus unterschiedlichen Zuständen, Lacken und Innenräumen.</span></div>
-              <div class="highlight"><b>Detailing</b><span>Fokus auf die kleinen Stellen, die den Gesamteindruck entscheiden.</span></div>
-            </div>
-          </article>
-
-          <aside class="stat-panel" aria-label="Powertech Performance aus Erfurt">
-            <div class="stat-content">
-              <strong>Powertech Performance aus Erfurt</strong>
-              <span>Mehrjährige Erfahrung, viele Fahrzeuge und ein hoher Detailanspruch: Aufbereitung wird hier als Handwerk verstanden, nicht als schnelle Standardwäsche.</span>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <section class="contact" id="kontakt">
+      <section class="module-panel" id="modul">
         <div>
-          <strong>Powertech Performance</strong>
-          <span>Benjamin Lemmer · An der Klinge 10 · 99095 Erfurt</span>
+          <h2 id="panelTitle">Präzision. Sauberkeit. Perfektion.</h2>
+          <p id="panelText">Trockeneis-Power für höchste Ansprüche: rückstandsfrei, trocken und präzise für Motorraum, Unterboden und sensible Bereiche.</p>
+          <div class="chips" id="chips"></div>
         </div>
-        <a class="btn primary" href="tel:+491737373574">+49 173 7373574</a>
+        <div class="cards" id="cards"></div>
       </section>
-    </main>
-  </div>
+    </section>
+  </main>
+
+  <section class="contact" id="kontakt">
+    <div>
+      <strong>Powertech Performance</strong>
+      <span>Benjamin Lemmer · An der Klinge 10 · 99095 Erfurt</span>
+    </div>
+    <a class="cta" href="tel:+491737373574">+49 173 7373574 <span>→</span></a>
+  </section>
 
   <script>
-    const modules = ["clean", "polish", "seal", "ice"];
+    const modes = ["prep", "polish", "seal", "ice"];
+    const angles = { prep: 0, polish: 90, seal: 180, ice: 270 };
     const content = {
-      clean: {
-        rotation: "-54deg",
-        logo: "Logo normal.png",
+      ice: {
+        logo: "logo with ice.png",
         status: "Detailing-Modus aktiv",
-        headlineA: "Auto",
-        headlineB: "Aufbereitung",
-        lead: "Slide durch das Modulrad und die komplette Seite verwandelt sich passend zum Service. Aufbereitung, Polieren, Versiegeln oder Trockeneis wirken wie eigene Modi in einer App.",
-        title: "Auto-Aufbereitung",
-        text: "Der saubere Komplettmodus: Innenraum, Außenpflege, Details und Finish werden als ein wertiger Gesamtauftritt geplant.",
-        chips: ["Innenraum", "Außenpflege", "Details", "Finish"],
+        headline: "Trockeneis",
+        lead: "Slide durch das Modulrad. Die komplette Seite verwandelt sich in den Trockeneis-Modus: kraftvolle, trockene Reinigung mit Eispräzision für Oberflächen, die mehr verdienen.",
+        benefitTitle: "Vorteile Trockeneis",
+        benefits: [
+          ["❄", "Rückstandsfrei", "Keine Feuchtigkeit, kein Abfall - nur pure Sauberkeit."],
+          ["⌁", "Umweltschonend", "100% trocken, chemiefrei und nachhaltig rein."],
+          ["⌖", "Maximale Präzision", "Selbst empfindlichste Oberflächen sicher reinigen."]
+        ],
+        panelTitle: "Präzision. Sauberkeit. Perfektion.",
+        panelText: "Trockeneis-Power für höchste Ansprüche: rückstandsfrei, trocken und präzise für Motorraum, Unterboden und sensible Bereiche.",
+        chips: ["Motorraum", "Unterboden", "Bauteile", "Rückstandsfrei"],
         cards: [
-          ["Komplett frischer Eindruck", "Für Alltag, Verkauf, Saisonstart oder einfach das gute Gefühl im eigenen Auto."],
-          ["Innen und außen gedacht", "Nicht einzelne Flecken, sondern ein stimmiger Gesamtzustand."],
-          ["Smartes Finish", "Saubere Oberflächen, klare Linien und gepflegte Details."],
-          ["Direkt anfragbar", "Der passende Umfang kann telefonisch schnell geklärt werden."]
+          ["Kalt & trocken", "Ideal für Stellen, an denen Wasser und Chemie nicht passen."],
+          ["Spezialservice", "Der Trockeneis-Modus hebt sich optisch und fachlich klar ab."]
         ]
       },
       polish: {
-        rotation: "-16deg",
         logo: "Logo normal.png",
         status: "Lack-Modus aktiv",
-        headlineA: "Lack",
-        headlineB: "Polieren",
-        lead: "Der Politur-Modus zieht die Seite in eine glänzende Performance-Optik. Der Fokus liegt auf Tiefe, Reflexion und einem sichtbar frischeren Lackbild.",
-        title: "Polieren",
-        text: "Für mehr Tiefe im Lack: matte Stellen, feine Defekte und Swirls werden gezielt bearbeitet, damit die Oberfläche wieder sauber spiegelt.",
-        chips: ["Glanz", "Lackbild", "Swirl-Reduktion", "Reflexion"],
+        headline: "Polieren",
+        lead: "Der Polier-Modus wechselt in eine warme Neon-Optik. Im Fokus stehen Glanz, Tiefe und ein Lackbild, das wieder sauber reflektiert.",
+        benefitTitle: "Vorteile Polieren",
+        benefits: [
+          ["✦", "Mehr Glanz", "Der Lack bekommt sichtbar mehr Tiefe und Brillanz."],
+          ["◈", "Ruhiges Lackbild", "Feine Defekte und matte Stellen werden gezielt bearbeitet."],
+          ["◎", "Perfektes Finish", "Die ideale Basis für Schutz, Versiegelung und Verkauf."]
+        ],
+        panelTitle: "Glanz. Tiefe. Reflexion.",
+        panelText: "Polieren bringt die Oberfläche zurück in Form: weniger Swirls, mehr Klarheit und ein hochwertiger Auftritt aus jedem Blickwinkel.",
+        chips: ["Glanz", "Swirl-Reduktion", "Reflexion", "Finish"],
         cards: [
-          ["Mehr Tiefe", "Der Lack wirkt dunkler, klarer und hochwertiger."],
-          ["Gezielte Bearbeitung", "Die Arbeit richtet sich nach Zustand, Zielbild und Lackhärte."],
-          ["Saubere Reflexion", "Flächen sollen wieder ruhiger und brillanter wirken."],
-          ["Vor Schutz ideal", "Perfekte Vorbereitung für anschließende Versiegelung."]
+          ["Lackbild", "Die Bearbeitung richtet sich nach Zustand, Ziel und Lackhärte."],
+          ["Premium-Look", "Mehr Tiefe und ein sichtbar frischeres Erscheinungsbild."]
+        ]
+      },
+      prep: {
+        logo: "Logo normal.png",
+        status: "Aufbereitungs-Modus aktiv",
+        headline: "Aufbereitung",
+        lead: "Der Aufbereitungs-Modus wirkt clean, edel und modern. Innenraum, Außenpflege und Details werden als kompletter Premium-Auftritt gedacht.",
+        benefitTitle: "Vorteile Aufbereitung",
+        benefits: [
+          ["01", "Innen & Außen", "Ein stimmiger Gesamtzustand statt einzelner Schnellpflege."],
+          ["02", "Detailarbeit", "Kanten, Spalten und Oberflächen bekommen echte Aufmerksamkeit."],
+          ["03", "Frischer Eindruck", "Perfekt für Alltag, Verkauf, Saisonstart und Werterhalt."]
+        ],
+        panelTitle: "Innenraum. Außenpflege. Detailfinish.",
+        panelText: "Autoaufbereitung bei Powertech Performance verbindet gründliche Reinigung, gepflegte Oberflächen und ein hochwertiges Gesamtbild.",
+        chips: ["Innenraum", "Polster", "Außenpflege", "Finish"],
+        cards: [
+          ["Komplettpflege", "Der Umfang wird passend zum Fahrzeugzustand abgestimmt."],
+          ["Sauberer Auftritt", "Für Fahrzeuge, die wieder frisch und wertig wirken sollen."]
         ]
       },
       seal: {
-        rotation: "18deg",
         logo: "Logo normal.png",
         status: "Schutz-Modus aktiv",
-        headlineA: "Lack",
-        headlineB: "Versiegeln",
-        lead: "Im Versiegelungs-Modus wird die Seite ruhiger und technischer: Schutz, Abperleffekt und Pflegeleichtigkeit stehen im Vordergrund.",
-        title: "Versiegeln",
-        text: "Nach der Aufbereitung bekommt der Lack eine schützende Oberfläche, die Wasser abperlen lässt und spätere Pflege erleichtert.",
-        chips: ["Lackschutz", "Abperleffekt", "Pflegeleicht", "Finish-Schutz"],
+        headline: "Versiegeln",
+        lead: "Der Versiegelungs-Modus wird ruhig, klar und technisch. Schutz, Abperleffekt und Pflegeleichtigkeit stehen im Vordergrund.",
+        benefitTitle: "Vorteile Versiegeln",
+        benefits: [
+          ["◆", "Lackschutz", "Die Oberfläche wird besser gegen Alltagsschmutz geschützt."],
+          ["◌", "Abperleffekt", "Wasser läuft sauberer ab und der Look bleibt länger frisch."],
+          ["✓", "Pflegeleicht", "Die nächsten Wäschen fühlen sich einfacher und glatter an."]
+        ],
+        panelTitle: "Schutz. Glätte. Werterhalt.",
+        panelText: "Eine Versiegelung bewahrt den frischen Look nach der Aufbereitung und macht die regelmäßige Pflege leichter.",
+        chips: ["Lackschutz", "Abperlen", "Glätte", "Werterhalt"],
         cards: [
-          ["Schutzschicht", "Die Oberfläche wird widerstandsfähiger gegen Alltagsschmutz."],
-          ["Abperleffekt", "Wasser läuft sauberer ab, der Look bleibt länger frisch."],
-          ["Pflege leichter", "Die nächsten Wäschen fühlen sich einfacher und glatter an."],
-          ["Finish erhalten", "Der Glanz nach der Aufbereitung wird länger bewahrt."]
-        ]
-      },
-      ice: {
-        rotation: "54deg",
-        logo: "logo with ice.png",
-        status: "ICE-Sektor aktiv",
-        headlineA: "Trockeneis",
-        headlineB: "Reinigung",
-        lead: "Wenn das Rad auf Trockeneis steht, kippt die ganze Seite in Kälte, Frost und High-Tech. Der Service wirkt wie ein eigener Spezialmodus.",
-        title: "Trockeneisreinigung",
-        text: "Für Motorraum, Unterboden, Bauteile und schwer zugängliche Bereiche: frostig, technisch und klar als Premium-Sparte inszeniert.",
-        chips: ["Motorraum", "Unterboden", "Bauteile", "Frost-Finish"],
-        cards: [
-          ["Motorraum", "Gezielte Reinigung für technische Bereiche und schwer zugängliche Stellen."],
-          ["Unterboden", "Starke Wirkung auf Rückstände und Ablagerungen."],
-          ["Bauteile", "Kontaktarme Bearbeitung für Kanten, Vertiefungen und Komponenten."],
-          ["Premium-Sparte", "Optisch und inhaltlich klar getrennt von klassischer Aufbereitung."]
+          ["Schutzschicht", "Der Lack wird widerstandsfähiger im Alltag."],
+          ["Finish sichern", "Der Glanz nach Politur und Aufbereitung hält länger."]
         ]
       }
     };
 
     const body = document.body;
+    const dial = document.getElementById("dial");
+    const rotor = document.getElementById("rotor");
     const brandLogo = document.getElementById("brandLogo");
-    const heroLogo = document.getElementById("heroLogo");
     const hubLogo = document.getElementById("hubLogo");
-    const headlineA = document.getElementById("headlineA");
-    const headlineB = document.getElementById("headlineB");
-    const leadText = document.getElementById("leadText");
     const statusText = document.getElementById("statusText");
+    const headline = document.getElementById("headline");
+    const leadText = document.getElementById("leadText");
+    const benefitTitle = document.getElementById("benefitTitle");
+    const benefits = document.getElementById("benefits");
     const panelTitle = document.getElementById("panelTitle");
     const panelText = document.getElementById("panelText");
     const chips = document.getElementById("chips");
     const cards = document.getElementById("cards");
-    const holoCard = document.getElementById("holoCard");
-    const dial = document.getElementById("dial");
-    const dialRotor = document.getElementById("dialRotor");
-    const dialActiveLabel = document.getElementById("dialActiveLabel");
-    const moduleButtons = Array.from(document.querySelectorAll("[data-module]"));
-    const frostCrystals = document.getElementById("frostCrystals");
-    const contentSection = document.getElementById("module");
-    const contactSection = document.getElementById("kontakt");
+    const dynamicBlocks = [statusText, headline, leadText, benefitTitle, benefits, panelTitle, panelText, chips, cards];
+    const buttons = Array.from(document.querySelectorAll("[data-mode]"));
+    let spin = -angles.ice;
+    let dragging = false;
+    let startAngle = 0;
+    let startSpin = 0;
 
-    const dialAngles = { clean: 0, polish: 90, seal: 180, ice: 270 };
-
-    const crystalGlyphs = ["❄", "❆", "✻", "❅"];
-    for (let i = 0; i < 24; i++) {
-      const span = document.createElement("span");
-      span.textContent = crystalGlyphs[i % crystalGlyphs.length];
-      span.style.left = `${Math.random() * 100}%`;
-      span.style.fontSize = `${12 + Math.random() * 20}px`;
-      span.style.animationDuration = `${9 + Math.random() * 10}s`;
-      span.style.animationDelay = `${Math.random() * -12}s`;
-      span.style.opacity = String(.25 + Math.random() * .5);
-      frostCrystals.appendChild(span);
+    function setSpin(value) {
+      spin = value;
+      rotor.style.setProperty("--spin", `${value}deg`);
     }
 
-    let activeModule = "clean";
-    let spin = 0;
-
-    function render(moduleName) {
-      const data = content[moduleName];
-      activeModule = moduleName;
-      body.dataset.module = moduleName;
-      brandLogo.src = data.logo;
-      heroLogo.src = data.logo;
-      hubLogo.src = data.logo;
-      dialActiveLabel.textContent = data.headlineB;
-      statusText.textContent = data.status;
-      headlineA.textContent = data.headlineA;
-      headlineB.textContent = data.headlineB;
-      leadText.textContent = data.lead;
-      panelTitle.textContent = data.title;
-      panelText.textContent = data.text;
-      chips.innerHTML = data.chips.map((chip) => `<span class="chip">${chip}</span>`).join("");
-      cards.innerHTML = data.cards.map(([title, text]) => `<div class="card"><b>${title}</b><span>${text}</span></div>`).join("");
-
-      moduleButtons.forEach((button) => {
-        const selected = button.dataset.module === moduleName;
-        button.classList.toggle("active", selected);
-        if (button.tagName === "BUTTON") button.setAttribute("aria-pressed", String(selected));
-      });
-
-      holoCard.classList.remove("is-pulsing");
-      requestAnimationFrame(() => holoCard.classList.add("is-pulsing"));
-
-      contentSection.classList.remove("ice-build");
-      contactSection.classList.remove("ice-build");
-      if (moduleName === "ice") {
-        void contentSection.offsetWidth;
-        contentSection.classList.add("ice-build");
-        contactSection.classList.add("ice-build");
-      }
-    }
-
-    function applySpin(deg) {
-      spin = deg;
-      dialRotor.style.setProperty("--spin", `${deg}deg`);
-    }
-
-    function nearestEquivalentAngle(current, target) {
+    function closestAngle(current, target) {
       const diff = (((target - current + 180) % 360) + 360) % 360 - 180;
       return current + diff;
     }
 
-    function selectModule(moduleName) {
-      const target = nearestEquivalentAngle(spin, -dialAngles[moduleName]);
-      applySpin(target);
-      render(moduleName);
+    function render(mode) {
+      const data = content[mode];
+      body.dataset.mode = mode;
+      brandLogo.src = data.logo;
+      hubLogo.src = data.logo;
+      statusText.textContent = data.status;
+      headline.textContent = data.headline;
+      leadText.textContent = data.lead;
+      benefitTitle.textContent = data.benefitTitle;
+      panelTitle.textContent = data.panelTitle;
+      panelText.textContent = data.panelText;
+      benefits.innerHTML = data.benefits.map(([icon, title, text]) => `<article class="benefit"><i>${icon}</i><b>${title}</b><span>${text}</span></article>`).join("");
+      chips.innerHTML = data.chips.map((chip) => `<span class="chip">${chip}</span>`).join("");
+      cards.innerHTML = data.cards.map(([title, text]) => `<article class="card"><b>${title}</b><span>${text}</span></article>`).join("");
+      buttons.forEach((button) => {
+        const active = button.dataset.mode === mode;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+      dynamicBlocks.forEach((el) => {
+        el.classList.remove("reveal");
+        void el.offsetWidth;
+        el.classList.add("reveal");
+      });
     }
 
-    moduleButtons.forEach((button) => {
-      button.addEventListener("click", (event) => {
-        event.stopPropagation();
-        selectModule(button.dataset.module);
-      });
-    });
+    function selectMode(mode) {
+      setSpin(closestAngle(spin, -angles[mode]));
+      render(mode);
+    }
 
     function pointerAngle(event) {
       const rect = dial.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = event.clientX - cx;
-      const dy = event.clientY - cy;
-      return Math.atan2(dx, -dy) * (180 / Math.PI);
+      const x = event.clientX - (rect.left + rect.width / 2);
+      const y = event.clientY - (rect.top + rect.height / 2);
+      return Math.atan2(x, -y) * 180 / Math.PI;
     }
 
-    function nearestModule(currentSpin) {
-      const normalized = (((-currentSpin) % 360) + 360) % 360;
-      let best = modules[0];
-      let bestDist = Infinity;
-      modules.forEach((moduleName) => {
-        const a = dialAngles[moduleName];
-        const dist = Math.min(Math.abs(a - normalized), 360 - Math.abs(a - normalized));
-        if (dist < bestDist) {
-          bestDist = dist;
-          best = moduleName;
-        }
+    function nearestMode() {
+      const normalized = (((-spin) % 360) + 360) % 360;
+      return modes.reduce((best, mode) => {
+        const dist = Math.min(Math.abs(angles[mode] - normalized), 360 - Math.abs(angles[mode] - normalized));
+        return dist < best.dist ? { mode, dist } : best;
+      }, { mode: "ice", dist: Infinity }).mode;
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        selectMode(button.dataset.mode);
       });
-      return best;
-    }
-
-    let dragging = false;
-    let startPointerAngle = 0;
-    let startSpin = 0;
+    });
 
     dial.addEventListener("pointerdown", (event) => {
       if (event.target.closest("button")) return;
       dragging = true;
-      startPointerAngle = pointerAngle(event);
+      startAngle = pointerAngle(event);
       startSpin = spin;
       dial.classList.add("dragging");
       dial.setPointerCapture(event.pointerId);
@@ -1723,41 +1008,28 @@
 
     dial.addEventListener("pointermove", (event) => {
       if (!dragging) return;
-      const angle = pointerAngle(event);
-      let delta = angle - startPointerAngle;
+      let delta = pointerAngle(event) - startAngle;
       delta = (((delta + 180) % 360) + 360) % 360 - 180;
-      applySpin(startSpin + delta);
+      setSpin(startSpin + delta);
     });
 
-    function endDrag() {
+    function stopDrag() {
       if (!dragging) return;
       dragging = false;
       dial.classList.remove("dragging");
-      selectModule(nearestModule(spin));
+      selectMode(nearestMode());
     }
 
-    dial.addEventListener("pointerup", endDrag);
-    dial.addEventListener("pointercancel", endDrag);
-
-    holoCard.addEventListener("pointermove", (event) => {
-      const rect = holoCard.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width - .5) * 16;
-      const y = ((event.clientY - rect.top) / rect.height - .5) * -16;
-      holoCard.style.transform = `rotateX(${y}deg) rotateY(${x}deg) translateY(-7px)`;
-    });
-
-    holoCard.addEventListener("pointerleave", () => {
-      holoCard.style.transform = "";
-    });
+    dial.addEventListener("pointerup", stopDrag);
+    dial.addEventListener("pointercancel", stopDrag);
 
     window.addEventListener("pointermove", (event) => {
-      document.body.style.setProperty("--mx", `${event.clientX}px`);
-      document.body.style.setProperty("--my", `${event.clientY}px`);
+      body.style.setProperty("--mx", `${event.clientX}px`);
+      body.style.setProperty("--my", `${event.clientY}px`);
     }, { passive: true });
 
-    const initialModule = modules.includes(location.hash.replace("#", "")) ? location.hash.replace("#", "") : "clean";
-    applySpin(-dialAngles[initialModule]);
-    render(initialModule);
+    setSpin(spin);
+    render("ice");
   </script>
 </body>
 </html>
