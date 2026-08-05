@@ -713,46 +713,62 @@
       color: var(--soft);
     }
 
-    .bottom-nav {
+    .frost-crystals {
       position: fixed;
-      z-index: 50;
-      left: 12px;
-      right: 12px;
-      bottom: 12px;
-      min-height: 64px;
-      display: none;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      padding: 7px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: rgba(5, 6, 9, .82);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 18px 70px rgba(0,0,0,.46);
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .6s ease;
     }
 
-    .bottom-nav button,
-    .bottom-nav a {
-      border: 0;
-      border-radius: 18px;
-      background: transparent;
-      color: var(--soft);
-      display: grid;
-      place-items: center;
-      gap: 2px;
-      font-size: 11px;
-      font-weight: 850;
-      cursor: pointer;
+    body[data-module="ice"] .frost-crystals {
+      opacity: 1;
     }
 
-    .bottom-nav b {
-      font-size: 17px;
-      line-height: 1;
+    .frost-crystals span {
+      position: absolute;
+      top: -8%;
+      font-size: 22px;
+      color: rgba(230, 251, 255, .55);
+      filter: drop-shadow(0 0 8px rgba(111,225,255,.6));
+      animation: crystal-fall linear infinite;
     }
 
-    .bottom-nav .active {
-      color: #fff;
-      background: rgba(255,255,255,.1);
+    @keyframes crystal-fall {
+      to { transform: translateY(112vh) rotate(360deg); }
+    }
+
+    .frost-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 15;
+      pointer-events: none;
+      opacity: 0;
+      background:
+        radial-gradient(circle at 50% 50%, transparent 55%, rgba(6, 24, 36, .5) 100%),
+        linear-gradient(rgba(226, 250, 255, .16), transparent 14%),
+        linear-gradient(to top, rgba(226, 250, 255, .16), transparent 14%);
+      mask-image: radial-gradient(circle at 50% 45%, transparent 40%, black 96%);
+      transition: opacity .6s ease;
+    }
+
+    body[data-module="ice"] .frost-vignette {
+      opacity: 1;
+    }
+
+    .content.ice-build,
+    .contact.ice-build {
+      animation: reveal-up .8s cubic-bezier(.2,.9,.2,1) both;
+    }
+
+    .contact.ice-build {
+      animation-delay: .16s;
+    }
+
+    @keyframes reveal-up {
+      from { opacity: 0; transform: translateY(34px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 980px) {
@@ -772,7 +788,7 @@
 
     @media (max-width: 640px) {
       .page {
-        padding-bottom: 94px;
+        padding-bottom: 28px;
       }
 
       .topbar {
@@ -935,24 +951,6 @@
         scroll-snap-align: start;
       }
 
-      .bottom-nav {
-        display: grid;
-        left: 8px;
-        right: 8px;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-
-      .bottom-nav button,
-      .bottom-nav a {
-        min-width: 0;
-        overflow: hidden;
-      }
-
-      .bottom-nav span {
-        max-width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -972,6 +970,8 @@
     <div class="mesh"></div>
     <div class="scan"></div>
     <div class="ice-particles"></div>
+    <div class="frost-crystals" id="frostCrystals" aria-hidden="true"></div>
+    <div class="frost-vignette" aria-hidden="true"></div>
 
     <header class="topbar">
       <div class="topbar-inner">
@@ -1051,13 +1051,6 @@
         <a class="btn primary" href="tel:+491737373574">+49 173 7373574</a>
       </section>
     </main>
-
-    <nav class="bottom-nav" aria-label="Mobile Navigation">
-      <button class="active" type="button" data-module="clean"><b>A</b><span>Auto</span></button>
-      <button type="button" data-module="polish"><b>P</b><span>Politur</span></button>
-      <button type="button" data-module="seal"><b>V</b><span>Schutz</span></button>
-      <button type="button" data-module="ice"><b>ICE</b><span>Frost</span></button>
-    </nav>
   </div>
 
   <script>
@@ -1148,6 +1141,21 @@
     const holoCard = document.getElementById("holoCard");
     const moduleWheel = document.getElementById("moduleWheel");
     const moduleButtons = Array.from(document.querySelectorAll("[data-module]"));
+    const frostCrystals = document.getElementById("frostCrystals");
+    const contentSection = document.getElementById("module");
+    const contactSection = document.getElementById("kontakt");
+
+    const crystalGlyphs = ["❄", "❆", "✻", "❅"];
+    for (let i = 0; i < 24; i++) {
+      const span = document.createElement("span");
+      span.textContent = crystalGlyphs[i % crystalGlyphs.length];
+      span.style.left = `${Math.random() * 100}%`;
+      span.style.fontSize = `${12 + Math.random() * 20}px`;
+      span.style.animationDuration = `${9 + Math.random() * 10}s`;
+      span.style.animationDelay = `${Math.random() * -12}s`;
+      span.style.opacity = String(.25 + Math.random() * .5);
+      frostCrystals.appendChild(span);
+    }
 
     let activeModule = "clean";
 
@@ -1175,6 +1183,14 @@
 
       holoCard.classList.remove("is-pulsing");
       requestAnimationFrame(() => holoCard.classList.add("is-pulsing"));
+
+      contentSection.classList.remove("ice-build");
+      contactSection.classList.remove("ice-build");
+      if (moduleName === "ice") {
+        void contentSection.offsetWidth;
+        contentSection.classList.add("ice-build");
+        contactSection.classList.add("ice-build");
+      }
     }
 
     moduleButtons.forEach((button) => {
