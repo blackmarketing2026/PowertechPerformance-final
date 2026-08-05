@@ -149,19 +149,27 @@
       position: sticky;
       top: 0;
       z-index: 30;
-      border-bottom: 1px solid var(--line);
-      background: color-mix(in srgb, var(--bg0) 74%, transparent);
-      backdrop-filter: blur(18px);
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+      background:
+        linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 8%, transparent), transparent),
+        color-mix(in srgb, var(--bg0) 76%, transparent);
+      backdrop-filter: blur(22px);
     }
 
     .topbar-inner {
       width: min(1200px, calc(100% - 28px));
-      min-height: 64px;
+      min-height: 68px;
       margin: 0 auto;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       gap: 18px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .brand {
@@ -175,8 +183,8 @@
     }
 
     .brand img {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       object-fit: contain;
       filter: drop-shadow(0 0 22px var(--glow));
       transition: filter .35s ease;
@@ -189,6 +197,23 @@
       font-size: 11px;
       text-transform: none;
       font-weight: 780;
+    }
+
+    .brand::after {
+      content: "Live Modul Cockpit";
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      margin-left: 8px;
+      padding: 0 12px;
+      border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+      border-radius: 999px;
+      color: color-mix(in srgb, var(--accent2) 78%, white);
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .02em;
+      text-transform: uppercase;
     }
 
     .pill,
@@ -233,16 +258,46 @@
     .hero {
       width: min(1200px, calc(100% - 28px));
       margin: 0 auto;
+      position: relative;
       display: grid;
-      gap: 8px;
-      padding: 22px 0 28px;
+      gap: 12px;
+      padding: 24px 0 34px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 16px 0 auto;
+      height: min(720px, calc(100svh - 92px));
+      border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 50% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 24rem),
+        linear-gradient(180deg, rgba(255,255,255,.055), transparent 70%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 34px 120px rgba(0,0,0,.28);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 16px 0 auto;
+      height: min(720px, calc(100svh - 92px));
+      background:
+        linear-gradient(90deg, transparent 0 49.8%, color-mix(in srgb, var(--accent) 28%, transparent) 50%, transparent 50.2%),
+        linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent) 10%, transparent), transparent);
+      opacity: .5;
+      pointer-events: none;
+      z-index: -1;
     }
 
     .dial-section {
       display: grid;
       justify-items: center;
       gap: 10px;
-      padding: 6px 0 18px;
+      padding: 18px 0 26px;
     }
 
     .dial-hint {
@@ -260,17 +315,18 @@
     .dial-crop {
       position: relative;
       width: 100%;
-      max-width: 460px;
-      height: clamp(178px, 47vw, 240px);
+      max-width: 560px;
+      height: clamp(210px, 47vw, 286px);
       overflow: hidden;
       touch-action: none;
+      filter: drop-shadow(0 26px 70px rgba(0,0,0,.48));
     }
 
     .dial {
       position: absolute;
       left: 50%;
       top: 0;
-      width: clamp(280px, 80vw, 400px);
+      width: clamp(330px, 78vw, 500px);
       aspect-ratio: 1;
       transform: translateX(-50%);
       touch-action: none;
@@ -280,15 +336,18 @@
     .dial-pointer {
       position: absolute;
       left: 50%;
-      top: -6px;
-      width: 0;
-      height: 0;
+      top: 5px;
+      width: 42px;
+      height: 74px;
       transform: translateX(-50%);
       z-index: 6;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-top: 16px solid var(--accent);
-      filter: drop-shadow(0 0 12px var(--glow));
+      border: 1px solid color-mix(in srgb, var(--accent) 46%, white);
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg, var(--accent2), var(--accent) 34%, transparent 35%),
+        rgba(255,255,255,.06);
+      box-shadow: 0 0 24px var(--glow), inset 0 0 18px rgba(255,255,255,.08);
+      clip-path: polygon(50% 0, 100% 22%, 62% 100%, 38% 100%, 0 22%);
     }
 
     .dial-rotor {
@@ -307,28 +366,47 @@
     .dial-ring {
       position: absolute;
       inset: 0;
-      clip-path: polygon(50.00% 0.00%, 56.41% 9.50%, 65.45% 2.45%, 68.61% 13.47%, 79.39% 9.55%, 78.99% 21.01%, 90.45% 20.61%, 86.53% 31.39%, 97.55% 34.55%, 90.50% 43.59%, 100.00% 50.00%, 90.50% 56.41%, 97.55% 65.45%, 86.53% 68.61%, 90.45% 79.39%, 78.99% 78.99%, 79.39% 90.45%, 68.61% 86.53%, 65.45% 97.55%, 56.41% 90.50%, 50.00% 100.00%, 43.59% 90.50%, 34.55% 97.55%, 31.39% 86.53%, 20.61% 90.45%, 21.01% 78.99%, 9.55% 79.39%, 13.47% 68.61%, 2.45% 65.45%, 9.50% 56.41%, 0.00% 50.00%, 9.50% 43.59%, 2.45% 34.55%, 13.47% 31.39%, 9.55% 20.61%, 21.01% 21.01%, 20.61% 9.55%, 31.39% 13.47%, 34.55% 2.45%, 43.59% 9.50%);
+      border-radius: 50%;
       background:
-        radial-gradient(circle at 38% 30%, rgba(255,255,255,.5), transparent 22%),
-        radial-gradient(circle at 50% 50%, #050609 0 27%, transparent 28%),
+        radial-gradient(circle at 38% 28%, rgba(255,255,255,.34), transparent 18%),
+        radial-gradient(circle at 50% 50%, #050609 0 26%, transparent 27%),
+        repeating-conic-gradient(from -2deg, rgba(255,255,255,.26) 0deg 2deg, transparent 2deg 11.25deg),
         conic-gradient(from 0deg,
           color-mix(in srgb, var(--accent) 70%, #2a2c36) 315deg 360deg, color-mix(in srgb, var(--accent) 70%, #2a2c36) 0deg 45deg,
           #4a4d5c 45deg 135deg,
           color-mix(in srgb, var(--accent2) 45%, #4a4d5c) 135deg 225deg,
           #3a3d4a 225deg 315deg);
-      box-shadow: 0 24px 80px rgba(0,0,0,.55), 0 0 70px var(--glow);
+      box-shadow:
+        0 24px 90px rgba(0,0,0,.58),
+        0 0 80px var(--glow),
+        inset 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent),
+        inset 0 0 0 18px rgba(255,255,255,.045),
+        inset 0 0 0 58px rgba(0,0,0,.18);
       transition: filter .35s ease;
       filter: saturate(1) brightness(1);
+    }
+
+    .dial-ring::before {
+      content: "";
+      position: absolute;
+      inset: 7%;
+      border-radius: 50%;
+      border: 1px solid color-mix(in srgb, var(--accent2) 34%, transparent);
+      background:
+        conic-gradient(from 45deg, transparent 0 22deg, rgba(255,255,255,.18) 22deg 24deg, transparent 24deg 90deg),
+        radial-gradient(circle at 50% 50%, transparent 0 58%, rgba(255,255,255,.08) 59%, transparent 60%);
+      mask-image: radial-gradient(circle, transparent 0 31%, black 32% 78%, transparent 79%);
     }
 
     .dial-ring::after {
       content: "";
       position: absolute;
-      inset: 30%;
+      inset: 29%;
       border-radius: 50%;
-      border: 1px dashed rgba(255,255,255,.28);
+      border: 1px solid rgba(255,255,255,.26);
       background:
-        repeating-conic-gradient(rgba(255,255,255,.16) 0deg 3deg, transparent 3deg 30deg);
+        radial-gradient(circle at 34% 28%, rgba(255,255,255,.22), transparent 22%),
+        repeating-conic-gradient(rgba(255,255,255,.18) 0deg 2deg, transparent 2deg 24deg);
       opacity: .8;
       animation: rim-spin 24s linear infinite;
     }
@@ -360,7 +438,7 @@
       pointer-events: none;
       transform:
         rotate(var(--a))
-        translateY(calc(-1 * clamp(112px, 34vw, 168px)))
+        translateY(calc(-1 * clamp(132px, 34vw, 210px)))
         rotate(calc(-1 * var(--a)));
     }
 
@@ -370,13 +448,15 @@
       top: 0;
       transform: translate(-50%, -50%) rotate(calc(-1 * var(--spin, 0deg)));
       min-width: 74px;
-      min-height: 40px;
+      min-height: 38px;
       padding: 0 10px;
       border: 1px solid var(--line);
       border-radius: 999px;
       color: var(--soft);
-      background: rgba(4, 5, 8, .74);
-      backdrop-filter: blur(10px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.025)),
+        rgba(4, 5, 8, .74);
+      backdrop-filter: blur(14px);
       font-weight: 900;
       font-size: 12px;
       text-transform: uppercase;
@@ -400,16 +480,20 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      width: 38%;
+      width: 34%;
       aspect-ratio: 1;
       transform: translate(-50%, -50%);
       border-radius: 50%;
       z-index: 7;
-      border: 1px solid rgba(255,255,255,.23);
+      border: 1px solid color-mix(in srgb, var(--accent) 30%, rgba(255,255,255,.23));
       background:
-        radial-gradient(circle at 35% 28%, rgba(255,255,255,.28), transparent 20%),
-        linear-gradient(145deg, #272938, #07080d);
-      box-shadow: 0 18px 45px rgba(0,0,0,.42), inset 0 0 38px rgba(255,255,255,.07);
+        radial-gradient(circle at 35% 28%, rgba(255,255,255,.3), transparent 18%),
+        radial-gradient(circle at 50% 64%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 54%),
+        linear-gradient(145deg, #252838, #07080d);
+      box-shadow:
+        0 18px 45px rgba(0,0,0,.42),
+        inset 0 0 38px rgba(255,255,255,.07),
+        0 0 28px color-mix(in srgb, var(--accent) 30%, transparent);
       display: grid;
       place-items: center;
       text-align: center;
@@ -557,7 +641,7 @@
       width: min(1200px, calc(100% - 28px));
       margin: 0 auto 42px;
       display: grid;
-      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      grid-template-columns: 1fr;
       gap: 18px;
       align-items: stretch;
     }
@@ -629,11 +713,16 @@
     }
 
     .module-panel {
+      min-height: auto;
       padding: 24px;
       display: grid;
       gap: 18px;
       align-content: start;
       transition: background .5s ease, border-color .5s ease;
+      background:
+        radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 24rem),
+        linear-gradient(135deg, rgba(255,255,255,.11), rgba(255,255,255,.035)),
+        var(--glass);
     }
 
     body[data-module="ice"] .module-panel {
@@ -686,24 +775,45 @@
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
     }
 
     .card {
-      min-height: 134px;
+      min-height: 158px;
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 16px;
-      background: rgba(255,255,255,.055);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.03)),
+        rgba(255,255,255,.045);
       display: grid;
       align-content: space-between;
-      transition: transform .2s ease, border-color .2s ease;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease;
+    }
+
+    .card::before,
+    .prep-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0 28%, rgba(255,255,255,.16) 42%, transparent 58%);
+      transform: translateX(-120%);
+      transition: transform .75s ease;
+      pointer-events: none;
     }
 
     .card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-5px);
       border-color: color-mix(in srgb, var(--accent) 44%, white);
+      box-shadow: 0 18px 54px color-mix(in srgb, var(--accent) 18%, transparent);
+    }
+
+    .card:hover::before,
+    .prep-panel:hover::before {
+      transform: translateX(120%);
     }
 
     .card b {
@@ -715,6 +825,262 @@
       color: var(--soft);
       line-height: 1.42;
       font-size: 14px;
+    }
+
+    .section-shell {
+      width: min(1200px, calc(100% - 28px));
+      margin: 0 auto 42px;
+      scroll-margin-top: 92px;
+    }
+
+    .content,
+    .section-shell,
+    .contact {
+      animation: luxury-rise .9s cubic-bezier(.2,.9,.2,1) both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 28%;
+    }
+
+    .section-kicker {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--soft);
+      background: rgba(255,255,255,.055);
+      font-size: 13px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .section-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--glow);
+    }
+
+    .section-title {
+      margin: 0;
+      max-width: 880px;
+      font-size: clamp(34px, 5vw, 74px);
+      line-height: .92;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .section-lead {
+      max-width: 780px;
+      margin: 16px 0 0;
+      color: color-mix(in srgb, var(--soft) 84%, white);
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.62;
+    }
+
+    .about-kicker {
+      margin-top: 34px;
+    }
+
+    .about-title {
+      max-width: 980px;
+      font-size: clamp(32px, 4.4vw, 64px);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.32fr) minmax(260px, .68fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 18px;
+    }
+
+    .about-panel,
+    .stat-panel,
+    .prep-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.035)),
+        var(--glass);
+      box-shadow: 0 24px 80px rgba(0,0,0,.26);
+    }
+
+    .about-panel {
+      padding: 26px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .about-panel p {
+      margin: 0;
+      color: color-mix(in srgb, var(--soft) 84%, white);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .about-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .highlight {
+      min-height: 116px;
+      display: grid;
+      align-content: space-between;
+      gap: 12px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.052);
+    }
+
+    .highlight b {
+      font-size: 26px;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .highlight span {
+      color: var(--soft);
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 760;
+    }
+
+    .stat-panel {
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+      display: grid;
+      align-content: end;
+      padding: 18px;
+    }
+
+    .stat-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, transparent 0 38%, rgba(5,6,10,.94)),
+        url("Benjamin.jpg") center / cover;
+      filter: saturate(.92) contrast(1.02);
+      transform: scale(1.02);
+    }
+
+    .stat-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 72% 20%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 18rem);
+    }
+
+    .stat-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 12px;
+    }
+
+    .stat-content strong {
+      font-size: clamp(22px, 2.4vw, 32px);
+      line-height: .98;
+      text-transform: uppercase;
+    }
+
+    .stat-content span {
+      color: color-mix(in srgb, var(--soft) 84%, white);
+      line-height: 1.55;
+    }
+
+    .prep-section {
+      margin-top: 28px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 24rem),
+        linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.025)),
+        var(--glass);
+      box-shadow: 0 24px 80px rgba(0,0,0,.26);
+    }
+
+    .prep-header {
+      display: grid;
+      grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+      gap: 34px;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+
+    .prep-header h2 {
+      margin: 0;
+      font-size: clamp(30px, 3.9vw, 52px);
+      line-height: .96;
+      text-transform: uppercase;
+      overflow-wrap: break-word;
+    }
+
+    .prep-header p {
+      margin: 0;
+      color: color-mix(in srgb, var(--soft) 84%, white);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .prep-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .prep-panel {
+      min-height: 170px;
+      padding: 18px;
+      display: grid;
+      align-content: space-between;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .prep-panel:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in srgb, var(--accent) 44%, white);
+      background: rgba(255,255,255,.07);
+    }
+
+    .prep-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: color-mix(in srgb, var(--bg0) 92%, #000);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 14px 34px var(--glow);
+      font-weight: 950;
+    }
+
+    .prep-panel h3 {
+      margin: 0 0 7px;
+      font-size: 20px;
+      line-height: 1.05;
+    }
+
+    .prep-panel p {
+      margin: 0;
+      color: var(--soft);
+      font-size: 14px;
+      line-height: 1.48;
     }
 
     .contact {
@@ -798,9 +1164,28 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    @keyframes luxury-rise {
+      from {
+        opacity: .35;
+        transform: translateY(42px) scale(.985);
+        filter: blur(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
     @media (max-width: 980px) {
-      .content {
+      .content,
+      .about-grid,
+      .prep-header {
         grid-template-columns: 1fr;
+      }
+
+      .prep-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .visual {
@@ -821,10 +1206,31 @@
         width: calc(100% - 20px);
         min-height: auto;
         padding: 10px 0;
+        gap: 10px;
+      }
+
+      .brand {
+        gap: 9px;
+      }
+
+      .brand span {
+        max-width: 210px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .brand::after {
+        display: none;
+      }
+
+      .nav {
+        display: none;
       }
 
       .hero,
       .content,
+      .section-shell,
       .contact {
         width: calc(100vw - 20px);
         max-width: calc(100vw - 20px);
@@ -863,11 +1269,18 @@
       }
 
       .dial {
-        width: clamp(220px, 78vw, 300px);
+        width: clamp(250px, 86vw, 330px);
+      }
+
+      .dial-tab {
+        transform:
+          rotate(var(--a))
+          translateY(calc(-1 * clamp(104px, 32vw, 132px)))
+          rotate(calc(-1 * var(--a)));
       }
 
       .dial-tab button {
-        min-width: 64px;
+        min-width: 58px;
         min-height: 36px;
         font-size: 11px;
         padding: 0 8px;
@@ -886,6 +1299,20 @@
       .contact {
         flex-direction: column;
         align-items: stretch;
+      }
+
+      .about-panel,
+      .prep-section {
+        padding: 18px;
+      }
+
+      .about-highlights,
+      .prep-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-panel {
+        min-height: 360px;
       }
 
       .cards {
@@ -926,7 +1353,12 @@
       <div class="topbar-inner">
         <a class="brand" href="#start" aria-label="Powertech Performance Start">
           <img id="brandLogo" src="Logo normal.png" alt="Powertech Performance Logo">
+          <span>Powertech Performance<small>Benjamin Lemmer · Erfurt</small></span>
         </a>
+        <nav class="nav" aria-label="Navigation">
+          <a class="pill" href="#aufbereitung">Aufbereitung</a>
+          <a class="pill" href="#kontakt">Kontakt</a>
+        </nav>
       </div>
     </header>
 
@@ -976,14 +1408,6 @@
       </section>
 
       <section class="content" id="module">
-        <div class="profile">
-          <img src="Benjamin.jpg" alt="Benjamin Lemmer poliert ein Fahrzeug">
-          <div class="profile-info">
-            <strong>Benjamin Lemmer</strong>
-            <span>Powertech Performance · An der Klinge 10 · 99095 Erfurt</span>
-          </div>
-        </div>
-
         <article class="module-panel">
           <div class="panel-top">
             <div>
@@ -995,6 +1419,90 @@
           <div class="chip-row" id="chips"></div>
           <div class="cards" id="cards"></div>
         </article>
+      </section>
+
+      <section class="section-shell" id="aufbereitung">
+        <span class="section-kicker">Aufbereitung</span>
+        <h2 class="section-title">Was wir für dein Fahrzeug anbieten.</h2>
+        <p class="section-lead">Die Autoaufbereitung ist der Kern von Powertech Performance: Innenraum, Polster, Motorraum, Lack, Schutz und Spezialreinigung werden als sauberer Prozess gedacht.</p>
+
+        <div class="prep-section">
+          <div class="prep-header">
+            <h2>Was ist Autoaufbereitung?</h2>
+            <p>Autoaufbereitung ist die gründliche Pflege und optische Wiederherstellung eines Fahrzeugs. Je nach Zustand geht es um Innenraum, Polster, Motorraum, Lack, Schutz und Spezialreinigung.</p>
+          </div>
+
+          <div class="prep-grid">
+            <article class="prep-panel">
+              <div class="prep-icon">01</div>
+              <div>
+                <h3>Innenraum-Reinigung</h3>
+                <p>Armaturen, Einstiege, Verkleidungen, Ablagen und sichtbare Flächen werden gründlich gereinigt.</p>
+              </div>
+            </article>
+            <article class="prep-panel">
+              <div class="prep-icon">02</div>
+              <div>
+                <h3>Polsterreinigung</h3>
+                <p>Sitze, Stoffe und Polster werden gezielt aufgefrischt, damit der Innenraum wieder gepflegt wirkt.</p>
+              </div>
+            </article>
+            <article class="prep-panel">
+              <div class="prep-icon">03</div>
+              <div>
+                <h3>Motorwäsche</h3>
+                <p>Der Motorraum wird optisch aufgewertet und von sichtbaren Verschmutzungen befreit.</p>
+              </div>
+            </article>
+            <article class="prep-panel">
+              <div class="prep-icon">04</div>
+              <div>
+                <h3>Polieren</h3>
+                <p>Der Lack erhält mehr Tiefe, Glanz und Ruhe in der Oberfläche.</p>
+              </div>
+            </article>
+            <article class="prep-panel">
+              <div class="prep-icon">05</div>
+              <div>
+                <h3>Versiegeln</h3>
+                <p>Schutz für den Lack, besserer Abperleffekt und leichtere Pflege nach der Aufbereitung.</p>
+              </div>
+            </article>
+            <article class="prep-panel">
+              <div class="prep-icon">ICE</div>
+              <div>
+                <h3>Trockeneis</h3>
+                <p>Für technische Bereiche, Motorraum, Unterboden und schwer erreichbare Stellen als Spezialservice.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <span class="section-kicker about-kicker">Über uns</span>
+        <h2 class="section-title about-title">Automobil-Detailing aus Erfurt, gemacht bis ins Detail.</h2>
+        <p class="section-lead">Powertech Performance steht für Fahrzeugpflege mit Anspruch: nicht schnell drüberwischen, sondern sauber hinschauen, gezielt arbeiten und jedes Auto so behandeln, dass der Unterschied sichtbar und fühlbar wird.</p>
+
+        <div class="about-grid">
+          <article class="about-panel">
+            <div>
+              <span class="section-kicker">Über uns</span>
+              <p>Powertech Performance aus Erfurt ist die Adresse für alle, die ihr Fahrzeug nicht nur sauber, sondern wirklich gepflegt sehen möchten. Benjamin Lemmer verbindet praktische Erfahrung, Geduld und ein Auge für Oberflächen, Kanten, Spalten und Details.</p>
+            </div>
+            <p>Durch mehrere Jahre Arbeit an vielen, vielen Autos ist ein klarer Anspruch entstanden: jedes Fahrzeug bekommt die Aufmerksamkeit, die es braucht. Gerade in Erfurt zählt Powertech Performance zu den wenigen Anbietern, die Automobil-Detailing wirklich bis ins Detail betreiben.</p>
+            <div class="about-highlights">
+              <div class="highlight"><b>Erfurt</b><span>Regional, direkt erreichbar und persönlich.</span></div>
+              <div class="highlight"><b>Viele Autos</b><span>Erfahrung aus unterschiedlichen Zuständen, Lacken und Innenräumen.</span></div>
+              <div class="highlight"><b>Detailing</b><span>Fokus auf die kleinen Stellen, die den Gesamteindruck entscheiden.</span></div>
+            </div>
+          </article>
+
+          <aside class="stat-panel" aria-label="Powertech Performance aus Erfurt">
+            <div class="stat-content">
+              <strong>Powertech Performance aus Erfurt</strong>
+              <span>Mehrjährige Erfahrung, viele Fahrzeuge und ein hoher Detailanspruch: Aufbereitung wird hier als Handwerk verstanden, nicht als schnelle Standardwäsche.</span>
+            </div>
+          </aside>
+        </div>
       </section>
 
       <section class="contact" id="kontakt">
