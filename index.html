@@ -673,9 +673,9 @@
       position: relative;
       z-index: 2;
       width: 100%;
-      margin-top: 18px;
+      margin-top: 28px;
       display: grid;
-      gap: 18px;
+      gap: 24px;
       text-align: left;
     }
 
@@ -710,17 +710,42 @@
       line-height: 1.55;
     }
 
-    .application-visual {
+    .application-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .application-section {
       position: relative;
-      min-height: clamp(240px, 32vw, 520px);
+      display: grid;
+      grid-template-columns: minmax(300px, .9fr) minmax(0, 1.1fr);
+      gap: clamp(18px, 3vw, 42px);
+      align-items: stretch;
       border: 1px solid var(--line);
       border-radius: 8px;
       overflow: hidden;
-      background: #02070d;
-      box-shadow: inset 0 0 42px color-mix(in srgb, var(--accent) 12%, transparent), 0 0 44px color-mix(in srgb, var(--accent) 14%, transparent);
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), rgba(0,0,0,.14)),
+        color-mix(in srgb, var(--panel) 88%, transparent);
+      box-shadow: inset 0 0 42px color-mix(in srgb, var(--accent) 10%, transparent), 0 0 34px color-mix(in srgb, var(--accent) 12%, transparent);
     }
 
-    .application-visual img {
+    .application-section:nth-child(even) {
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
+    }
+
+    .application-section:nth-child(even) .application-media {
+      order: 2;
+    }
+
+    .application-media {
+      position: relative;
+      min-height: clamp(260px, 25vw, 410px);
+      overflow: hidden;
+      background: #02070d;
+    }
+
+    .application-media img {
       width: 100%;
       height: 100%;
       min-height: inherit;
@@ -729,34 +754,76 @@
       filter: saturate(1.1) contrast(1.05);
     }
 
-    .application-visual::after {
+    .application-media::after {
       content: "";
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.18)),
-        radial-gradient(circle at 50% 10%, transparent, rgba(0,0,0,.18) 70%);
+        linear-gradient(135deg, transparent, rgba(0,0,0,.34)),
+        radial-gradient(circle at 50% 20%, transparent, rgba(0,0,0,.22) 72%);
       pointer-events: none;
     }
 
-    .service-grid {
+    .application-copy {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      align-content: center;
+      gap: 14px;
+      padding: clamp(20px, 3vw, 38px);
+    }
+
+    .application-copy-top {
+      display: flex;
+      align-items: center;
       gap: 14px;
     }
 
+    .application-copy h3 {
+      margin: 0;
+      color: var(--accent2);
+      font-size: clamp(25px, 3vw, 44px);
+      line-height: .98;
+      text-transform: uppercase;
+      letter-spacing: .01em;
+    }
+
+    .application-copy p {
+      margin: 0;
+      color: var(--soft);
+      font-size: clamp(16px, 1.35vw, 20px);
+      line-height: 1.55;
+    }
+
+    .application-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .application-points span {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: var(--accent2);
+      background: rgba(0,0,0,.22);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .media-engine img { object-position: 16% 23%; }
+    .media-interior img { object-position: 50% 23%; }
+    .media-cockpit img { object-position: 84% 23%; }
+    .media-engine-parts img { object-position: 16% 76%; }
+    .media-special img { object-position: 50% 76%; }
+    .media-industrial img { object-position: 84% 76%; }
+
     .service-card {
-      min-height: 210px;
       display: grid;
       align-content: start;
       gap: 12px;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.025)),
-        color-mix(in srgb, var(--panel) 88%, transparent);
-      box-shadow: inset 0 0 28px color-mix(in srgb, var(--accent) 10%, transparent);
     }
 
     .service-icon {
@@ -774,21 +841,6 @@
       font-size: 18px;
       font-weight: 950;
       letter-spacing: .02em;
-    }
-
-    .service-card h3 {
-      margin: 0;
-      color: var(--accent2);
-      font-size: clamp(18px, 1.6vw, 24px);
-      line-height: 1.05;
-      text-transform: uppercase;
-    }
-
-    .service-card p {
-      margin: 0;
-      color: var(--soft);
-      font-size: 15px;
-      line-height: 1.48;
     }
 
     .service-card strong {
@@ -1011,7 +1063,18 @@
       .module-panel, .cards { grid-template-columns: 1fr; }
       .benefit { min-height: 132px; }
       .module-panel { margin-top: 12px; }
-      .service-grid { grid-template-columns: repeat(2, 1fr); }
+      .application-section,
+      .application-section:nth-child(even) {
+        grid-template-columns: 1fr;
+      }
+
+      .application-section:nth-child(even) .application-media {
+        order: 0;
+      }
+
+      .application-media {
+        min-height: 280px;
+      }
       .contact { flex-direction: column; align-items: flex-start; }
       .contact .cta { width: 100%; }
     }
@@ -1048,9 +1111,11 @@
       .module-panel p { font-size: 15px; }
       .module-panel { padding: 16px; }
       .applications { margin-top: 12px; }
-      .application-visual { min-height: 290px; }
-      .service-grid { grid-template-columns: 1fr; gap: 10px; }
-      .service-card { min-height: auto; padding: 16px; }
+      .application-list { gap: 12px; }
+      .application-media { min-height: 230px; }
+      .application-copy { padding: 16px; }
+      .application-copy-top { align-items: flex-start; }
+      .application-points { grid-template-columns: 1fr; }
       .contact { width: 100%; margin: 0; border-left: 0; border-right: 0; border-radius: 0; }
     }
 
@@ -1143,45 +1208,119 @@
         <p>Trockeneis wird dort stark, wo Wasser, Chemie oder harte Mechanik nicht ideal sind. Die Pellets lösen Verschmutzungen kontaktarm, verdampfen rückstandsfrei und erreichen auch Kanten, Vertiefungen und technische Bauteile.</p>
       </div>
 
-      <div class="application-visual">
-        <img src="assets/trockeneis-anwendungen.png" alt="Trockeneis-Anwendungsbereiche für Motorraum, Innenraum, Cockpit, Motorteile, Spezialteile und Industrie-Teile">
-      </div>
-
-      <div class="service-grid">
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">ENG</div>
-          <h3>Motor-Innenraumreinigung</h3>
-          <p><strong>Schonend behandelte Motorbereiche:</strong> Trockeneis löst Ölnebel, Staub und Ablagerungen in schwer zugänglichen Zonen, ohne zusätzliche Feuchtigkeit einzutragen.</p>
+      <div class="application-list">
+        <article class="application-section">
+          <div class="application-media media-engine">
+            <img src="assets/trockeneis-anwendungen.png" alt="Motorraumreinigung mit Trockeneis">
+          </div>
+          <div class="application-copy">
+            <div class="application-copy-top">
+              <div class="service-icon" aria-hidden="true">ENG</div>
+              <h3>Motor-Innenraumreinigung</h3>
+            </div>
+            <p><strong>Schonend behandelte Motorbereiche:</strong> Trockeneis löst Ölnebel, Staub und Ablagerungen in schwer zugänglichen Zonen, ohne zusätzliche Feuchtigkeit einzutragen. Ideal für Motorraum, Falze, Kanten und technische Zwischenräume.</p>
+            <div class="application-points">
+              <span>Keine zusätzliche Nässe</span>
+              <span>Für verwinkelte Bereiche</span>
+              <span>Rückstandsfrei</span>
+              <span>Optisch sauberer Motorraum</span>
+            </div>
+          </div>
         </article>
 
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">IN</div>
-          <h3>Innenraumreinigung</h3>
-          <p>Für robuste Innenraumzonen, Einstiege, Schienen, Kanten und strukturierte Oberflächen, bei denen eine trockene, präzise Behandlung Vorteile bringt.</p>
+        <article class="application-section">
+          <div class="application-media media-interior">
+            <img src="assets/trockeneis-anwendungen.png" alt="Innenraumreinigung mit Trockeneis">
+          </div>
+          <div class="application-copy">
+            <div class="application-copy-top">
+              <div class="service-icon" aria-hidden="true">IN</div>
+              <h3>Innenraumreinigung</h3>
+            </div>
+            <p>Für robuste Innenraumzonen, Einstiege, Sitzschienen, Kanten und strukturierte Oberflächen, bei denen eine trockene, präzise Behandlung Vorteile bringt. Besonders spannend bei Detailbereichen, die mit Standardreinigung schwer erreichbar sind.</p>
+            <div class="application-points">
+              <span>Einstiege & Schienen</span>
+              <span>Strukturierte Flächen</span>
+              <span>Detailzonen</span>
+              <span>Schonende Arbeitsweise</span>
+            </div>
+          </div>
         </article>
 
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">HUD</div>
-          <h3>Cockpitreinigung</h3>
-          <p>Feine Spalten, Lüftungsgitter, Schalterumfelder und verwinkelte Cockpitbereiche werden mit kontrollierter, materialbewusster Arbeitsweise gereinigt.</p>
+        <article class="application-section">
+          <div class="application-media media-cockpit">
+            <img src="assets/trockeneis-anwendungen.png" alt="Cockpitreinigung mit Trockeneis">
+          </div>
+          <div class="application-copy">
+            <div class="application-copy-top">
+              <div class="service-icon" aria-hidden="true">HUD</div>
+              <h3>Cockpitreinigung</h3>
+            </div>
+            <p>Feine Spalten, Lüftungsgitter, Schalterumfelder und verwinkelte Cockpitbereiche werden mit kontrollierter, materialbewusster Arbeitsweise gereinigt. Der Fokus liegt auf Präzision statt grobem Druck.</p>
+            <div class="application-points">
+              <span>Lüftungsgitter</span>
+              <span>Schalterumfelder</span>
+              <span>Feine Spalten</span>
+              <span>Kontrollierte Behandlung</span>
+            </div>
+          </div>
         </article>
 
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">MOT</div>
-          <h3>Spezielle Motorteile</h3>
-          <p>Ansaugungen, Halter, Gehäuse, Abdeckungen und technische Komponenten lassen sich punktgenau bearbeiten, ohne Bauteile unnötig zu belasten.</p>
+        <article class="application-section">
+          <div class="application-media media-engine-parts">
+            <img src="assets/trockeneis-anwendungen.png" alt="Spezielle Motorteile mit Trockeneis reinigen">
+          </div>
+          <div class="application-copy">
+            <div class="application-copy-top">
+              <div class="service-icon" aria-hidden="true">MOT</div>
+              <h3>Spezielle Motorteile</h3>
+            </div>
+            <p>Ansaugungen, Halter, Gehäuse, Abdeckungen und technische Komponenten lassen sich punktgenau bearbeiten, ohne Bauteile unnötig zu belasten. Perfekt für Teile mit vielen Kanten, Vertiefungen und Oberflächenwechseln.</p>
+            <div class="application-points">
+              <span>Ansaugungen & Halter</span>
+              <span>Gehäuse & Abdeckungen</span>
+              <span>Punktgenau</span>
+              <span>Für technische Details</span>
+            </div>
+          </div>
         </article>
 
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">SP</div>
-          <h3>Spezielle Teile</h3>
-          <p>Für Einzelteile, Felgenbereiche, Oldtimer-Komponenten, verwinkelte Metallteile oder empfindliche Oberflächen mit hohem Detailanspruch.</p>
+        <article class="application-section">
+          <div class="application-media media-special">
+            <img src="assets/trockeneis-anwendungen.png" alt="Spezielle Einzelteile mit Trockeneis behandeln">
+          </div>
+          <div class="application-copy">
+            <div class="application-copy-top">
+              <div class="service-icon" aria-hidden="true">SP</div>
+              <h3>Spezielle Teile</h3>
+            </div>
+            <p>Für Einzelteile, Felgenbereiche, Oldtimer-Komponenten, verwinkelte Metallteile oder empfindliche Oberflächen mit hohem Detailanspruch. Trockeneis eignet sich besonders, wenn Teile sauber werden sollen, ohne Reinigungsrückstände zu hinterlassen.</p>
+            <div class="application-points">
+              <span>Einzelteile</span>
+              <span>Oldtimer-Komponenten</span>
+              <span>Metall & Technik</span>
+              <span>Hoher Detailanspruch</span>
+            </div>
+          </div>
         </article>
 
-        <article class="service-card">
-          <div class="service-icon" aria-hidden="true">IND</div>
-          <h3>Industrie-Teile</h3>
-          <p>Maschinenteile, Formen, Werkzeuge und technische Baugruppen können trocken, präzise und ohne sekundären Reinigungsabfall behandelt werden.</p>
+        <article class="application-section">
+          <div class="application-media media-industrial">
+            <img src="assets/trockeneis-anwendungen.png" alt="Industrie-Teile mit Trockeneis reinigen">
+          </div>
+          <div class="application-copy">
+            <div class="application-copy-top">
+              <div class="service-icon" aria-hidden="true">IND</div>
+              <h3>Industrie-Teile</h3>
+            </div>
+            <p>Maschinenteile, Formen, Werkzeuge und technische Baugruppen können trocken, präzise und ohne sekundären Reinigungsabfall behandelt werden. Die Methode ist besonders interessant für wiederkehrende technische Reinigungsaufgaben.</p>
+            <div class="application-points">
+              <span>Maschinenteile</span>
+              <span>Formen & Werkzeuge</span>
+              <span>Kein Strahlmittelabfall</span>
+              <span>Technische Reinigung</span>
+            </div>
+          </div>
         </article>
       </div>
     </section>
