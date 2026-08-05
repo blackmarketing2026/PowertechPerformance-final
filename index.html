@@ -257,10 +257,22 @@
       color: var(--text);
     }
 
-    .dial {
+    .dial-crop {
       position: relative;
-      width: clamp(240px, 66vw, 340px);
+      width: 100%;
+      max-width: 460px;
+      height: clamp(178px, 47vw, 240px);
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    .dial {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: clamp(280px, 80vw, 400px);
       aspect-ratio: 1;
+      transform: translateX(-50%);
       touch-action: none;
       user-select: none;
     }
@@ -295,17 +307,47 @@
     .dial-ring {
       position: absolute;
       inset: 0;
-      border-radius: 50%;
-      border: 1px solid color-mix(in srgb, var(--accent) 32%, white);
+      clip-path: polygon(50.00% 0.00%, 56.41% 9.50%, 65.45% 2.45%, 68.61% 13.47%, 79.39% 9.55%, 78.99% 21.01%, 90.45% 20.61%, 86.53% 31.39%, 97.55% 34.55%, 90.50% 43.59%, 100.00% 50.00%, 90.50% 56.41%, 97.55% 65.45%, 86.53% 68.61%, 90.45% 79.39%, 78.99% 78.99%, 79.39% 90.45%, 68.61% 86.53%, 65.45% 97.55%, 56.41% 90.50%, 50.00% 100.00%, 43.59% 90.50%, 34.55% 97.55%, 31.39% 86.53%, 20.61% 90.45%, 21.01% 78.99%, 9.55% 79.39%, 13.47% 68.61%, 2.45% 65.45%, 9.50% 56.41%, 0.00% 50.00%, 9.50% 43.59%, 2.45% 34.55%, 13.47% 31.39%, 9.55% 20.61%, 21.01% 21.01%, 20.61% 9.55%, 31.39% 13.47%, 34.55% 2.45%, 43.59% 9.50%);
       background:
-        radial-gradient(circle at 50% 50%, rgba(6,7,10,.97) 0 33%, transparent 34%),
+        radial-gradient(circle at 38% 30%, rgba(255,255,255,.5), transparent 22%),
+        radial-gradient(circle at 50% 50%, #050609 0 27%, transparent 28%),
         conic-gradient(from 0deg,
-          #a267ff 315deg 360deg, #a267ff 0deg 45deg,
-          #ff4fa0 45deg 135deg,
-          #73ffc2 135deg 225deg,
-          #6fe1ff 225deg 315deg);
-      box-shadow: 0 24px 80px rgba(0,0,0,.5), inset 0 0 50px rgba(255,255,255,.08), 0 0 60px var(--glow);
-      transition: border-color .45s ease;
+          color-mix(in srgb, var(--accent) 70%, #2a2c36) 315deg 360deg, color-mix(in srgb, var(--accent) 70%, #2a2c36) 0deg 45deg,
+          #4a4d5c 45deg 135deg,
+          color-mix(in srgb, var(--accent2) 45%, #4a4d5c) 135deg 225deg,
+          #3a3d4a 225deg 315deg);
+      box-shadow: 0 24px 80px rgba(0,0,0,.55), 0 0 70px var(--glow);
+      transition: filter .35s ease;
+      filter: saturate(1) brightness(1);
+    }
+
+    .dial-ring::after {
+      content: "";
+      position: absolute;
+      inset: 30%;
+      border-radius: 50%;
+      border: 1px dashed rgba(255,255,255,.28);
+      background:
+        repeating-conic-gradient(rgba(255,255,255,.16) 0deg 3deg, transparent 3deg 30deg);
+      opacity: .8;
+      animation: rim-spin 24s linear infinite;
+    }
+
+    @keyframes rim-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .dial.dragging .dial-ring {
+      filter: saturate(1.35) brightness(1.18);
+    }
+
+    .dial.dragging .dial-hub {
+      box-shadow: 0 18px 45px rgba(0,0,0,.42), inset 0 0 38px rgba(255,255,255,.07), 0 0 34px var(--glow);
+      transform: translate(-50%, -50%) scale(.96);
+    }
+
+    .dial-hub {
+      transition: transform .2s ease, box-shadow .2s ease;
     }
 
     .dial-tab {
@@ -318,7 +360,7 @@
       pointer-events: none;
       transform:
         rotate(var(--a))
-        translateY(calc(-1 * clamp(96px, 30vw, 148px)))
+        translateY(calc(-1 * clamp(112px, 34vw, 168px)))
         rotate(calc(-1 * var(--a)));
     }
 
@@ -891,28 +933,30 @@
     <main>
       <section class="hero" id="start">
         <div class="dial-section">
-          <div class="dial" id="dial" aria-label="Modul-Drehrad – drehen zum Wechseln des Service">
-            <div class="dial-pointer" aria-hidden="true"></div>
-            <div class="dial-rotor" id="dialRotor">
-              <div class="dial-ring"></div>
-              <div class="dial-tab" style="--a:0deg">
-                <button type="button" data-module="clean" aria-pressed="true">Aufbereitung</button>
+          <div class="dial-crop">
+            <div class="dial" id="dial" aria-label="Modul-Zahnrad – gedrückt halten und drehen zum Wechseln des Service">
+              <div class="dial-pointer" aria-hidden="true"></div>
+              <div class="dial-rotor" id="dialRotor">
+                <div class="dial-ring"></div>
+                <div class="dial-tab" style="--a:0deg">
+                  <button type="button" data-module="clean" aria-pressed="true">Aufbereitung</button>
+                </div>
+                <div class="dial-tab" style="--a:90deg">
+                  <button type="button" data-module="polish" aria-pressed="false">Polieren</button>
+                </div>
+                <div class="dial-tab" style="--a:180deg">
+                  <button type="button" data-module="seal" aria-pressed="false">Versiegeln</button>
+                </div>
+                <div class="dial-tab" style="--a:270deg">
+                  <button type="button" data-module="ice" aria-pressed="false">Trockeneis</button>
+                </div>
               </div>
-              <div class="dial-tab" style="--a:90deg">
-                <button type="button" data-module="polish" aria-pressed="false">Polieren</button>
+              <div class="dial-hub" aria-hidden="true">
+                <img id="hubLogo" src="Logo normal.png" alt="">
               </div>
-              <div class="dial-tab" style="--a:180deg">
-                <button type="button" data-module="seal" aria-pressed="false">Versiegeln</button>
-              </div>
-              <div class="dial-tab" style="--a:270deg">
-                <button type="button" data-module="ice" aria-pressed="false">Trockeneis</button>
-              </div>
-            </div>
-            <div class="dial-hub" aria-hidden="true">
-              <img id="hubLogo" src="Logo normal.png" alt="">
             </div>
           </div>
-          <p class="dial-hint">Drehrad drehen oder Modul antippen &middot; aktiv: <b id="dialActiveLabel">Aufbereitung</b></p>
+          <p class="dial-hint">Gedrückt halten und drehen &middot; aktiv: <b id="dialActiveLabel">Aufbereitung</b></p>
         </div>
 
         <div class="copy">
