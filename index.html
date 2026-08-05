@@ -117,11 +117,11 @@
     button { font: inherit; color: inherit; }
 
     .shell {
-      width: min(1120px, calc(100% - 24px));
-      margin: 12px auto;
+      width: min(1920px, 100%);
+      margin: 0 auto;
       position: relative;
-      min-height: calc(100vh - 24px);
-      padding: clamp(18px, 3vw, 40px) clamp(14px, 4vw, 58px) 34px;
+      min-height: 100vh;
+      padding: clamp(18px, 2vw, 34px) clamp(18px, 4vw, 86px) 34px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background:
@@ -165,7 +165,11 @@
       justify-content: space-between;
       align-items: center;
       gap: 14px;
-      margin-bottom: 16px;
+      min-height: 94px;
+      margin: 0 -18px 10px;
+      padding: 0 18px;
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+      background: linear-gradient(90deg, rgba(0,0,0,.36), color-mix(in srgb, var(--accent) 7%, transparent), rgba(0,0,0,.36));
     }
 
     .brand {
@@ -179,26 +183,38 @@
     }
 
     .brand img {
-      width: 48px;
-      height: 48px;
+      width: 96px;
+      height: 64px;
       object-fit: contain;
       filter: drop-shadow(0 0 24px var(--glow));
+    }
+
+    .brand span {
+      color: transparent;
+      background: linear-gradient(180deg, #fff, var(--accent2) 36%, var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      filter: drop-shadow(0 0 16px var(--glow));
+      font-size: clamp(22px, 2vw, 38px);
+      line-height: .86;
     }
 
     .brand small {
       display: block;
       margin-top: 4px;
       color: var(--soft);
-      font-size: 12px;
+      font-size: clamp(10px, .8vw, 14px);
       font-weight: 800;
-      text-transform: none;
+      letter-spacing: .28em;
+      text-transform: uppercase;
     }
 
     .nav {
       display: flex;
-      gap: 8px;
+      gap: clamp(16px, 2vw, 42px);
       flex-wrap: wrap;
       justify-content: flex-end;
+      align-items: center;
     }
 
     .nav a,
@@ -216,6 +232,40 @@
       font-weight: 900;
     }
 
+    .nav a:not(.nav-cta) {
+      min-height: auto;
+      padding: 0;
+      border: 0;
+      background: none;
+      box-shadow: none;
+      color: color-mix(in srgb, var(--text) 86%, var(--soft));
+      font-size: 15px;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
+    .nav-cta {
+      min-width: 220px;
+      min-height: 58px;
+      justify-content: center;
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+
+    .menu-button {
+      display: none;
+      width: 74px;
+      height: 74px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--panel) 72%, transparent);
+      box-shadow: inset 0 0 22px color-mix(in srgb, var(--accent) 12%, transparent), 0 0 22px color-mix(in srgb, var(--accent) 13%, transparent);
+      color: var(--accent2);
+      font-size: 34px;
+      font-weight: 300;
+      line-height: 1;
+    }
+
     .hero {
       position: relative;
       z-index: 2;
@@ -223,6 +273,17 @@
       justify-items: center;
       text-align: center;
       gap: clamp(10px, 1.4vw, 16px);
+    }
+
+    .dial-stage,
+    .copy-stage {
+      display: grid;
+      justify-items: center;
+      width: 100%;
+    }
+
+    .copy-stage {
+      gap: 14px;
     }
 
     .dial-wrap {
@@ -416,6 +477,12 @@
       letter-spacing: .03em;
     }
 
+    .status-dial {
+      margin-top: -48px;
+      position: relative;
+      z-index: 12;
+    }
+
     .status::before {
       content: "";
       width: 20px;
@@ -605,7 +672,7 @@
     .contact {
       position: relative;
       z-index: 2;
-      width: min(1120px, calc(100% - 24px));
+      width: min(1920px, 100%);
       margin: 0 auto 40px;
       display: flex;
       align-items: center;
@@ -636,39 +703,119 @@
       }
 
       .topbar {
-        margin-bottom: 6px;
+        margin-bottom: 0;
+      }
+
+      .hero {
+        grid-template-columns: minmax(470px, .9fr) minmax(520px, 1.1fr);
+        grid-template-areas:
+          "dial copy"
+          "lower lower";
+        align-items: center;
+        column-gap: clamp(28px, 4vw, 86px);
+        row-gap: 18px;
+      }
+
+      .dial-stage {
+        grid-area: dial;
+        align-self: start;
+      }
+
+      .copy-stage {
+        grid-area: copy;
+        align-self: center;
+        padding-top: 12px;
+      }
+
+      .status-dial {
+        margin-top: -60px;
       }
 
       .dial-wrap {
-        width: clamp(590px, 50vw, 700px);
-        margin-top: -10px;
+        width: clamp(460px, 39vw, 690px);
+        margin-top: -4px;
       }
 
       .tab {
-        transform: rotate(var(--a)) translateY(calc(-1 * clamp(202px, 18vw, 242px))) rotate(calc(-1 * var(--a)));
+        transform: rotate(var(--a)) translateY(calc(-1 * clamp(160px, 14vw, 238px))) rotate(calc(-1 * var(--a)));
+      }
+
+      .tab button {
+        width: clamp(116px, 10vw, 162px);
       }
 
       h1 {
-        font-size: clamp(82px, 8.2vw, 124px);
+        font-size: clamp(78px, 6.8vw, 132px);
       }
 
       .lead {
-        font-size: clamp(19px, 1.7vw, 24px);
+        width: min(700px, 100%);
+        font-size: clamp(18px, 1.3vw, 23px);
+      }
+
+      .copy-stage .cta {
+        width: min(330px, 100%);
+        min-height: 58px;
+        font-size: 24px;
+      }
+
+      .copy-stage .benefits {
+        align-items: stretch;
+        border-top: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+        padding-top: 12px;
+      }
+
+      .copy-stage .benefit {
+        grid-template-columns: auto 1fr;
+        justify-items: start;
+        text-align: left;
+        align-content: center;
+        min-height: 82px;
+        padding: 10px 16px;
+        border: 0;
+        border-left: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .copy-stage .benefit:first-child {
+        border-left: 0;
+      }
+
+      .copy-stage .benefit i {
+        grid-row: span 2;
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+      }
+
+      .copy-stage .benefit b {
+        font-size: 16px;
+      }
+
+      .copy-stage .benefit span {
+        font-size: 13px;
       }
 
       .benefit {
         min-height: 142px;
+      }
+
+      .module-panel {
+        grid-area: lower;
+        grid-template-columns: 1.15fr .85fr;
+        margin-top: 8px;
       }
     }
 
     @media (min-width: 1440px) {
       .shell,
       .contact {
-        width: min(1180px, calc(100% - 48px));
+        width: min(1920px, 100%);
       }
 
       .dial-wrap {
-        width: 720px;
+        width: clamp(620px, 39vw, 760px);
       }
     }
 
@@ -681,15 +828,25 @@
       }
 
       .shell {
-        width: min(620px, calc(100% - 16px));
-        margin: 8px auto;
-        min-height: calc(100vh - 16px);
-        padding: 16px 12px 24px;
+        width: min(760px, 100%);
+        margin: 0 auto;
+        min-height: 100vh;
+        padding: 22px 18px 24px;
       }
 
-      .topbar { align-items: flex-start; }
+      .topbar {
+        align-items: center;
+        min-height: 116px;
+        margin: -22px -18px 8px;
+        padding: 18px 24px 12px;
+      }
+
       .brand::after { display: none; }
       .nav { display: none; }
+      .menu-button { display: grid; place-items: center; flex: 0 0 auto; }
+      .brand img { width: 118px; height: 82px; }
+      .brand span { font-size: clamp(28px, 8vw, 42px); }
+      .brand small { font-size: clamp(10px, 2.3vw, 13px); letter-spacing: .22em; }
 
       .hero {
         gap: 12px;
@@ -715,12 +872,15 @@
       .tab { transform: rotate(var(--a)) translateY(calc(-1 * clamp(128px, 35vw, 170px))) rotate(calc(-1 * var(--a))); }
       .tab button { width: clamp(82px, 23vw, 112px); min-height: 40px; padding: 0 7px; font-size: clamp(9px, 2.6vw, 12px); }
       .status { min-height: 54px; padding: 0 14px; font-size: clamp(15px, 4.2vw, 20px); }
+      .copy-stage > .status { display: none; }
+      .status-dial { margin-top: -34px; }
       .status::before { width: 14px; height: 14px; box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 18%, transparent), 0 0 24px var(--glow); }
       h1 { font-size: clamp(44px, 13vw, 72px); line-height: .9; }
       .lead { width: min(520px, 100%); font-size: clamp(16px, 4.4vw, 19px); line-height: 1.42; }
       .cta { min-height: 60px; font-size: clamp(20px, 6vw, 28px); }
       .kicker { gap: 9px; font-size: 12px; }
-      .benefits, .module-panel, .cards { grid-template-columns: 1fr; }
+      .benefits { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .module-panel, .cards { grid-template-columns: 1fr; }
       .benefit { min-height: 132px; }
       .module-panel { margin-top: 12px; }
       .contact { flex-direction: column; align-items: flex-start; }
@@ -728,7 +888,7 @@
     }
 
     @media (max-width: 520px) {
-      .shell { margin: 0; width: 100%; min-height: 100vh; border-left: 0; border-right: 0; border-radius: 0; }
+      .shell { margin: 0; width: 100%; min-height: 100vh; border-left: 0; border-right: 0; border-radius: 0; padding: 16px 10px 20px; }
       .shell::before {
         background:
           linear-gradient(135deg, var(--accent) 0 16px, transparent 16px) top left / 64px 64px no-repeat,
@@ -736,8 +896,11 @@
           linear-gradient(45deg, var(--accent) 0 16px, transparent 16px) bottom left / 64px 64px no-repeat,
           linear-gradient(315deg, var(--accent) 0 16px, transparent 16px) bottom right / 64px 64px no-repeat;
       }
-      .brand span { font-size: 13px; }
-      .brand img { width: 42px; height: 42px; }
+      .topbar { min-height: 96px; margin: -16px -10px 4px; padding: 16px 18px 10px; }
+      .brand { gap: 8px; }
+      .brand span { font-size: clamp(22px, 7vw, 32px); }
+      .brand img { width: 92px; height: 64px; }
+      .menu-button { width: 58px; height: 58px; font-size: 28px; }
       .dial-wrap { width: min(100%, 392px); margin-top: 4px; }
       .pointer { width: 44px; height: 42px; }
       .tab { transform: rotate(var(--a)) translateY(calc(-1 * clamp(118px, 34vw, 142px))) rotate(calc(-1 * var(--a))); }
@@ -746,10 +909,14 @@
       .hub::after { width: 34px; height: 34px; font-size: 10px; }
       .status { max-width: 100%; }
       .status::before { flex: 0 0 auto; }
-      .lead { font-size: 16px; }
-      .benefit { min-height: 116px; padding: 14px; }
+      .lead { font-size: 16px; width: min(360px, 100%); }
+      .kicker { margin-top: 10px; }
+      .benefits { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .benefit { min-height: 154px; padding: 10px 7px; }
       .benefit i { width: 48px; height: 48px; font-size: 19px; }
-      .benefit span, .module-panel p { font-size: 15px; }
+      .benefit b { font-size: clamp(11px, 3vw, 14px); }
+      .benefit span { font-size: clamp(11px, 3.1vw, 14px); }
+      .module-panel p { font-size: 15px; }
       .module-panel { padding: 16px; }
       .contact { width: 100%; margin: 0; border-left: 0; border-right: 0; border-radius: 0; }
     }
@@ -762,6 +929,9 @@
       h1 { font-size: clamp(38px, 12.5vw, 50px); }
       .lead { font-size: 15px; }
       .status { font-size: 14px; padding: 0 10px; }
+      .brand img { width: 78px; height: 56px; }
+      .brand span { font-size: 20px; }
+      .benefit { min-height: 148px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -779,38 +949,49 @@
     <header class="topbar">
       <a class="brand" href="#start" aria-label="Powertech Performance Start">
         <img id="brandLogo" src="logo with ice.png" alt="Powertech Performance Logo">
-        <span>Powertech Performance<small>Benjamin Lemmer · Erfurt</small></span>
+        <span id="brandTitle">Trockeneis<small id="brandSub">Premium Detailing</small></span>
       </a>
       <nav class="nav" aria-label="Navigation">
-        <a href="#modul">Modul</a>
+        <a href="#leistungen">Leistungen⌄</a>
+        <a href="#modul">Über uns</a>
+        <a href="#anwendungen">Anwendungen</a>
+        <a href="#referenzen">Referenzen</a>
+        <a href="#blog">Blog</a>
         <a href="#kontakt">Kontakt</a>
+        <a class="nav-cta" href="tel:+491737373574">Jetzt anrufen</a>
       </nav>
+      <button class="menu-button" type="button" aria-label="Menü öffnen">☰</button>
     </header>
 
     <section class="hero" aria-label="Interaktives Service-Modulrad">
-      <div class="dial-wrap">
-        <div class="pointer" aria-hidden="true"></div>
-        <div class="dial" id="dial" aria-label="Drehrad gedrückt halten und drehen">
-          <div class="rotor" id="rotor">
-            <div class="segments"></div>
-            <div class="tab" style="--a:0deg"><button type="button" data-mode="prep">Aufbereitung</button></div>
-            <div class="tab" style="--a:90deg"><button type="button" data-mode="polish">Polieren</button></div>
-            <div class="tab" style="--a:180deg"><button type="button" data-mode="seal">Versiegeln</button></div>
-            <div class="tab" style="--a:270deg"><button type="button" data-mode="ice">Trockeneis</button></div>
-          </div>
-          <div class="hub" aria-hidden="true">
-            <img id="hubLogo" src="logo with ice.png" alt="">
+      <div class="dial-stage">
+        <div class="dial-wrap">
+          <div class="pointer" aria-hidden="true"></div>
+          <div class="dial" id="dial" aria-label="Drehrad gedrückt halten und drehen">
+            <div class="rotor" id="rotor">
+              <div class="segments"></div>
+              <div class="tab" style="--a:0deg"><button type="button" data-mode="prep">Aufbereitung</button></div>
+              <div class="tab" style="--a:90deg"><button type="button" data-mode="polish">Polieren</button></div>
+              <div class="tab" style="--a:180deg"><button type="button" data-mode="seal">Versiegeln</button></div>
+              <div class="tab" style="--a:270deg"><button type="button" data-mode="ice">Trockeneis</button></div>
+            </div>
+            <div class="hub" aria-hidden="true">
+              <img id="hubLogo" src="logo with ice.png" alt="">
+            </div>
           </div>
         </div>
+        <div class="status status-dial" id="statusDialText">Detailing-Modus aktiv</div>
       </div>
 
-      <div class="status" id="statusText">Detailing-Modus aktiv</div>
-      <h1 id="headline">Trockeneis</h1>
-      <p class="lead" id="leadText">Slide durch das Modulrad. Die komplette Seite verwandelt sich in den Trockeneis-Modus: kraftvolle, trockene Reinigung mit Eispräzision für Oberflächen, die mehr verdienen.</p>
-      <a class="cta" href="tel:+491737373574">Jetzt anrufen <span>→</span></a>
+      <div class="copy-stage">
+        <div class="status" id="statusText">Detailing-Modus aktiv</div>
+        <h1 id="headline">Trockeneis</h1>
+        <p class="lead" id="leadText">Slide durch das Modulrad. Die komplette Seite verwandelt sich in den Trockeneis-Modus: kraftvolle, trockene Reinigung mit Eispräzision für Oberflächen, die mehr verdienen.</p>
+        <a class="cta" href="tel:+491737373574">Jetzt anrufen <span>→</span></a>
 
-      <div class="kicker" id="benefitTitle">Vorteile Trockeneis</div>
-      <div class="benefits" id="benefits"></div>
+        <div class="kicker" id="benefitTitle">Vorteile Trockeneis</div>
+        <div class="benefits" id="benefits"></div>
+      </div>
 
       <section class="module-panel" id="modul">
         <div>
@@ -837,7 +1018,10 @@
     const content = {
       ice: {
         logo: "logo with ice.png",
-        status: "Detailing-Modus aktiv",
+        brandTitle: "Trockeneis",
+        brandSub: "Premium Detailing",
+        status: "Detailing-Modus: Trockeneis",
+        dialStatus: "Detailing-Modus aktiv",
         headline: "Trockeneis",
         lead: "Slide durch das Modulrad. Die komplette Seite verwandelt sich in den Trockeneis-Modus: kraftvolle, trockene Reinigung mit Eispräzision für Oberflächen, die mehr verdienen.",
         benefitTitle: "Vorteile Trockeneis",
@@ -856,7 +1040,10 @@
       },
       polish: {
         logo: "Logo normal.png",
-        status: "Lack-Modus aktiv",
+        brandTitle: "Polieren",
+        brandSub: "Lack Detailing",
+        status: "Detailing-Modus: Polieren",
+        dialStatus: "Lack-Modus aktiv",
         headline: "Polieren",
         lead: "Der Polier-Modus wechselt in eine warme Neon-Optik. Im Fokus stehen Glanz, Tiefe und ein Lackbild, das wieder sauber reflektiert.",
         benefitTitle: "Vorteile Polieren",
@@ -875,7 +1062,10 @@
       },
       prep: {
         logo: "Logo normal.png",
-        status: "Aufbereitungs-Modus aktiv",
+        brandTitle: "Aufbereitung",
+        brandSub: "Premium Detailing",
+        status: "Detailing-Modus: Aufbereitung",
+        dialStatus: "Aufbereitungs-Modus aktiv",
         headline: "Aufbereitung",
         lead: "Der Aufbereitungs-Modus wirkt clean, edel und modern. Innenraum, Außenpflege und Details werden als kompletter Premium-Auftritt gedacht.",
         benefitTitle: "Vorteile Aufbereitung",
@@ -894,7 +1084,10 @@
       },
       seal: {
         logo: "logo with shield.png",
-        status: "Schutz-Modus aktiv",
+        brandTitle: "Versiegelung",
+        brandSub: "Shield Detailing",
+        status: "Detailing-Modus: Versiegelung",
+        dialStatus: "Schutz-Modus aktiv",
         headline: "Versiegeln",
         lead: "Der Versiegelungs-Modus wird ruhig, klar und technisch. Schutz, Abperleffekt und Pflegeleichtigkeit stehen im Vordergrund.",
         benefitTitle: "Vorteile Versiegeln",
@@ -917,8 +1110,11 @@
     const dial = document.getElementById("dial");
     const rotor = document.getElementById("rotor");
     const brandLogo = document.getElementById("brandLogo");
+    const brandTitle = document.getElementById("brandTitle");
+    const brandSub = document.getElementById("brandSub");
     const hubLogo = document.getElementById("hubLogo");
     const statusText = document.getElementById("statusText");
+    const statusDialText = document.getElementById("statusDialText");
     const headline = document.getElementById("headline");
     const leadText = document.getElementById("leadText");
     const benefitTitle = document.getElementById("benefitTitle");
@@ -927,7 +1123,7 @@
     const panelText = document.getElementById("panelText");
     const chips = document.getElementById("chips");
     const cards = document.getElementById("cards");
-    const dynamicBlocks = [statusText, headline, leadText, benefitTitle, benefits, panelTitle, panelText, chips, cards];
+    const dynamicBlocks = [statusText, statusDialText, headline, leadText, benefitTitle, benefits, panelTitle, panelText, chips, cards];
     const buttons = Array.from(document.querySelectorAll("[data-mode]"));
     let spin = -angles.ice;
     let dragging = false;
@@ -948,8 +1144,11 @@
       const data = content[mode];
       body.dataset.mode = mode;
       brandLogo.src = data.logo;
+      brandTitle.childNodes[0].nodeValue = data.brandTitle;
+      brandSub.textContent = data.brandSub;
       hubLogo.src = data.logo;
       statusText.textContent = data.status;
+      statusDialText.textContent = data.dialStatus || data.status;
       headline.textContent = data.headline;
       leadText.textContent = data.lead;
       benefitTitle.textContent = data.benefitTitle;
